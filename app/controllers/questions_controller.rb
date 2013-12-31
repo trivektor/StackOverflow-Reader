@@ -1,3 +1,52 @@
+class UITableViewCell
+  def self.reuseIdentifier
+    self.class.to_s
+  end
+end
+
+class QuestionCell < UITableViewCell
+
+  attr_accessor :question, :titleLabel, :subTitleLabel
+
+  CELL_SPACING = 8
+
+  def initWithStyle(style, reuseIdentifier: identifier)
+    super
+    createLabels
+    self
+  end
+
+  def createLabels
+  end
+
+  def render
+    self.contentView.subviews.each { |v| v.removeFromSuperview }
+    maximumLabelSize = CGSizeMake(298, CGFLOAT_MAX)
+
+    titleLabelHeight = question.title.sizeWithFont('HelveticaNeue-Light'.uifont(14), constrainedToSize: maximumLabelSize).height
+    @titleLabel = UILabel.alloc.initWithFrame([[11, CELL_SPACING], [298, titleLabelHeight]])
+    @titleLabel.lineBreakMode = NSLineBreakByWordWrapping
+    @titleLabel.text = @question.title
+    @titleLabel.numberOfLines = 0
+    @titleLabel.font = 'HelveticaNeue-Light'.uifont(14)
+    @titleLabel.sizeToFit
+
+    self.contentView.addSubview(@titleLabel)
+
+    subTitleLabelHeight = question.tags.join(', ').sizeWithFont('HelveticaNeue-Light'.uifont(13), constrainedToSize: maximumLabelSize).height
+    @subTitleLabel = UILabel.alloc.initWithFrame([[11, @titleLabel.frame.size.height + CELL_SPACING*3/2], [298, subTitleLabelHeight + CELL_SPACING]])
+    @subTitleLabel.lineBreakMode = NSLineBreakByWordWrapping
+    @subTitleLabel.text = @question.tags.join(', ')
+    @subTitleLabel.numberOfLines = 0
+    @subTitleLabel.font = 'HelveticaNeue-Light'.uifont(13)
+    @subTitleLabel.textColor = '#999'.uicolor
+    @subTitleLabel.sizeToFit
+
+    self.contentView.addSubview(@subTitleLabel)
+  end
+
+end
+
 class QuestionsController < UIViewController
 
   include UIViewControllerExtension
@@ -18,7 +67,7 @@ class QuestionsController < UIViewController
   private
 
   def performHousekeepingTasks
-    @table = createTable
+    @table = createTable(cell: QuestionCell)
     self.view.addSubview(@table)
   end
 
@@ -34,19 +83,32 @@ class QuestionsController < UIViewController
     @questions.count
   end
 
-  def tableView(tableView, heightForRowAtIndexPath:indexPath)
-    44
+  def sizeOfLabel(label, withText: text)
+    text.sizeWithFont(label.font, constrainedToSize:label.frame.size, lineBreakMode:label.lineBreakMode)
+  end
+
+  def tableView(tableView, heightForRowAtIndexPath: indexPath)
+    # Calculate title label height
+    question = @questions[indexPath.row]
+    maximumLabelSize = CGSizeMake(298, CGFLOAT_MAX)
+    expectedLabelSize1 = question.title.sizeWithFont('HelveticaNeue-Light'.uifont(14), constrainedToSize: maximumLabelSize)
+    expectedLabelSize2 = question.tags.join(', ').sizeWithFont('HelveticaNeue-Light'.uifont(13), constrainedToSize: maximumLabelSize)
+    [QuestionCell::CELL_SPACING, expectedLabelSize1.height, QuestionCell::CELL_SPACING, expectedLabelSize2.height, QuestionCell::CELL_SPACING/2].reduce(:+)
   end
 
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
-    cell = @table.dequeueReusableCellWithIdentifier('Cell') || begin
-      NewsfeedCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: 'Cell')
+    cell = @table.dequeueReusableCellWithIdentifier(QuestionCell.reuseIdentifier) || begin
+      QuestionCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: QuestionCell.reuseIdentifier)
     end
+
+    cell.question = @questions[indexPath.row]
+    cell.render
     cell
   end
 
   def displayQuestions(notification)
     @questions = notification.object
+    @table.reloadData
   end
 
 end
