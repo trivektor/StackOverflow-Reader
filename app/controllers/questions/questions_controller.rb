@@ -70,7 +70,7 @@ class QuestionsController < UIViewController
 
   def performHousekeepingTasks
     @table = createTable(cell: QuestionCell)
-    self.view.addSubview(@table)
+    view.addSubview(@table)
   end
 
   def registerEvents
@@ -91,7 +91,7 @@ class QuestionsController < UIViewController
 
   def tableView(tableView, heightForRowAtIndexPath: indexPath)
     # Calculate title label height
-    question = @questions[indexPath.row]
+    question = questionAtIndexPath(indexPath)
     maximumLabelSize = CGSizeMake(298, CGFLOAT_MAX)
     expectedLabelSize1 = decodeHTMLEntities(question.title).sizeWithFont('HelveticaNeue-Light'.uifont(14), constrainedToSize: maximumLabelSize)
     expectedLabelSize2 = decodeHTMLEntities(question.tags.join(', ')).sizeWithFont('HelveticaNeue-Light'.uifont(13), constrainedToSize: maximumLabelSize)
@@ -108,6 +108,17 @@ class QuestionsController < UIViewController
     cell
   end
 
+  def tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    questionController = QuestionController.new.initWithQuestion(questionAtIndexPath(indexPath))
+    navigationController.pushViewController(questionController, animated: true)
+  end
+
+  private
+
+  def questionAtIndexPath(indexPath)
+    @questions[indexPath.row]
+  end
+
   def displayQuestions(notification)
     @questions = notification.object
     @table.reloadData
@@ -119,7 +130,7 @@ class TopQuestionsController < QuestionsController
 
   def viewDidLoad
     super
-    self.navigationItem.title = 'Top Questions'
+    navigationItem.title = 'Top Questions'
   end
 
 end
