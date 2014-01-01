@@ -18,17 +18,28 @@ PODS:
   - AFNetworking/UIKit (2.0.3):
     - AFNetworking/NSURLConnection
   - FontAwesomeIconFactory (1.3)
+  - MWFeedParser (0.0.1):
+    - MWFeedParser/Feed
+    - MWFeedParser/NSDate+InternetDateTime
+    - MWFeedParser/NSString+HTML
+    - MWFeedParser/NSString+XMLEntities
+  - MWFeedParser/Feed (0.0.1)
+  - MWFeedParser/NSDate+InternetDateTime (0.0.1)
+  - MWFeedParser/NSString+HTML (0.0.1)
+  - MWFeedParser/NSString+XMLEntities (0.0.1)
   - SSKeychain (1.2.1)
 
 DEPENDENCIES:
   - AFNetworking
   - AFNetworking (~> 2.0.1)
   - FontAwesomeIconFactory
+  - MWFeedParser (= 0.0.1)
   - SSKeychain
 
 SPEC CHECKSUMS:
   AFNetworking: e499052cbf3d743e9bb727bb37adb9dc2547ba15
   FontAwesomeIconFactory: eb4101e952987a817b1f37b73f45cd59acb1a0bb
+  MWFeedParser: 2ca0852fac352f8333d5f46fdd4b583b921e0c4e
   SSKeychain: d18926838c2e7cd342e2a49e9f869858e49f035a
 
 COCOAPODS: 0.29.0

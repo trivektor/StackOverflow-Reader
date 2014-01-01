@@ -37,5 +37,6 @@ Motion::Project::App.setup do |app|
     pod 'AFNetworking'
     pod 'SSKeychain'
     pod 'FontAwesomeIconFactory'
+    pod 'MWFeedParser'
   end
 end

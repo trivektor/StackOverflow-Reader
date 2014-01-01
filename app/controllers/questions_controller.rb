@@ -6,6 +6,7 @@ end
 
 class QuestionCell < UITableViewCell
 
+  include AppHelper
   attr_accessor :question, :titleLabel, :subTitleLabel
 
   CELL_SPACING = 8
@@ -26,7 +27,7 @@ class QuestionCell < UITableViewCell
     titleLabelHeight = question.title.sizeWithFont('HelveticaNeue-Light'.uifont(14), constrainedToSize: maximumLabelSize).height
     @titleLabel = UILabel.alloc.initWithFrame([[11, CELL_SPACING], [298, titleLabelHeight]])
     @titleLabel.lineBreakMode = NSLineBreakByWordWrapping
-    @titleLabel.text = @question.title
+    @titleLabel.text = decodeHTMLEntities(@question.title)
     @titleLabel.numberOfLines = 0
     @titleLabel.font = 'HelveticaNeue-Light'.uifont(14)
     @titleLabel.sizeToFit
@@ -36,7 +37,7 @@ class QuestionCell < UITableViewCell
     subTitleLabelHeight = question.tags.join(', ').sizeWithFont('HelveticaNeue-Light'.uifont(13), constrainedToSize: maximumLabelSize).height
     @subTitleLabel = UILabel.alloc.initWithFrame([[11, @titleLabel.frame.size.height + CELL_SPACING*3/2], [298, subTitleLabelHeight + CELL_SPACING]])
     @subTitleLabel.lineBreakMode = NSLineBreakByWordWrapping
-    @subTitleLabel.text = @question.tags.join(', ')
+    @subTitleLabel.text = decodeHTMLEntities(@question.tags.join(', '))
     @subTitleLabel.numberOfLines = 0
     @subTitleLabel.font = 'HelveticaNeue-Light'.uifont(13)
     @subTitleLabel.textColor = '#999'.uicolor
@@ -50,6 +51,7 @@ end
 class QuestionsController < UIViewController
 
   include UIViewControllerExtension
+  include AppHelper
 
   def init
     super
@@ -91,8 +93,8 @@ class QuestionsController < UIViewController
     # Calculate title label height
     question = @questions[indexPath.row]
     maximumLabelSize = CGSizeMake(298, CGFLOAT_MAX)
-    expectedLabelSize1 = question.title.sizeWithFont('HelveticaNeue-Light'.uifont(14), constrainedToSize: maximumLabelSize)
-    expectedLabelSize2 = question.tags.join(', ').sizeWithFont('HelveticaNeue-Light'.uifont(13), constrainedToSize: maximumLabelSize)
+    expectedLabelSize1 = decodeHTMLEntities(question.title).sizeWithFont('HelveticaNeue-Light'.uifont(14), constrainedToSize: maximumLabelSize)
+    expectedLabelSize2 = decodeHTMLEntities(question.tags.join(', ')).sizeWithFont('HelveticaNeue-Light'.uifont(13), constrainedToSize: maximumLabelSize)
     [QuestionCell::CELL_SPACING, expectedLabelSize1.height, QuestionCell::CELL_SPACING, expectedLabelSize2.height, QuestionCell::CELL_SPACING/2].reduce(:+)
   end
 
