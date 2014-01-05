@@ -12,22 +12,29 @@ class MenuCell < UITableViewCell
   def createLabels
     whiteColor = UIColor.whiteColor
     clearColor = UIColor.clearColor
+    shadowColor = '#000'.uicolor(0.1)
+    shadowOffset = CGSizeMake(1, 1)
 
     @iconLabel = UILabel.alloc.initWithFrame([[15, 9], [25, 25]])
     @iconLabel.textColor = whiteColor
     @iconLabel.backgroundColor = clearColor
     @iconLabel.font = FontAwesome.fontWithSize(16)
+    @iconLabel.shadowColor = shadowColor
+    @iconLabel.shadowOffset = shadowOffset
 
     @textLabel = UILabel.alloc.initWithFrame([[45, 11], [243, 21]])
     @textLabel.textColor = whiteColor
     @textLabel.backgroundColor = clearColor
     @textLabel.font = 'Helvetica-Neue Light'.uifont(13)
+    @textLabel.shadowColor = shadowColor
+    @textLabel.shadowOffset = shadowOffset
 
     contentView.addSubview(@iconLabel)
     contentView.addSubview(@textLabel)
     selectedBackgroundView = UIView.alloc.initWithFrame(self.frame)
     selectedBackgroundView.backgroundColor = 'red'.uicolor
     self.selectedBackgroundView = selectedBackgroundView
+    self.selectionStyle = UITableViewCellSelectionStyleNone
   end
 
   def renderForRowAtIndexPath(indexPath)
@@ -52,7 +59,7 @@ class MenuCell < UITableViewCell
 
     if indexPath.row < 4
       bottomBorder = UIView.alloc.initWithFrame([[0, 43], [180, 0.5]])
-      bottomBorder.backgroundColor = '#fff'.uicolor(0.5)
+      bottomBorder.backgroundColor = '#fff'.uicolor(0.2)
       contentView.addSubview(bottomBorder)
     end
   end
@@ -69,11 +76,12 @@ class MenuController < UIViewController
   end
 
   def performHousekeepingTasks
-    @table = createTable(cell: MenuCell)
+    frame = self.view.frame
+    @table = createTable(cell: MenuCell, frame: CGRectMake(0, 80, frame.size.width, frame.size.height))
     clearColor = UIColor.clearColor
     @table.backgroundColor = clearColor
     @table.separatorColor = clearColor
-    view.backgroundColor = '#3498db'.uicolor
+    view.backgroundColor = '#34495e'.uicolor
     view.addSubview(@table)
   end
 
