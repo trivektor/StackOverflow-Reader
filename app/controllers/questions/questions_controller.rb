@@ -71,6 +71,11 @@ class QuestionsController < UIViewController
   def performHousekeepingTasks
     @table = createTable(cell: QuestionCell)
     view.addSubview(@table)
+
+    #if navigationController.viewControllers.count == 1
+    menuButton = UIBarButtonItem.alloc.initWithImage('399-list1.png'.uiimage, landscapeImagePhone: nil, style: UIBarButtonItemStyleBordered, target: self, action: 'showMenu')
+    navigationItem.leftBarButtonItem = menuButton
+    #end
   end
 
   def registerEvents
@@ -124,6 +129,10 @@ class QuestionsController < UIViewController
     @table.reloadData
   end
 
+  def showMenu
+    self.sideMenuViewController.presentMenuViewController
+  end
+
 end
 
 class TopQuestionsController < QuestionsController
@@ -132,5 +141,10 @@ class TopQuestionsController < QuestionsController
     super
     navigationItem.title = 'Top Questions'
   end
+
+  def showMenu
+    self.sideMenuViewController.presentMenuViewController
+  end
+
 
 end

@@ -33,10 +33,15 @@ Motion::Project::App.setup do |app|
     app.seed_id + '.' + app.identifier
   ]
 
+  # Fonts
+  app.fonts = ['FontAwesome.otf']
+
   app.pods do
     pod 'AFNetworking'
     pod 'SSKeychain'
     pod 'FontAwesomeIconFactory'
+    pod 'FontAwesome+iOS'
     pod 'MWFeedParser'
+    pod 'RESideMenu'
   end
 end
