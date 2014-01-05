@@ -20,8 +20,13 @@ class AppDelegate
 
     UIBarButtonItem.appearance.setTintColor(whiteColor)
 
+    UIApplication.sharedApplication.statusBarStyle = UIStatusBarStyleLightContent
+
     topQuestionsController = TopQuestionsController.alloc.init
     navController = UINavigationController.alloc.initWithRootViewController(topQuestionsController)
+    navController.navigationBar.translucent = false
+    navController.navigationBar.tintColor = whiteColor
+
     menuController = MenuController.alloc.init
 
     sideMenuController = RESideMenu.alloc.initWithContentViewController(navController, menuViewController: menuController)

@@ -36,6 +36,8 @@ Motion::Project::App.setup do |app|
   # Fonts
   app.fonts = ['FontAwesome.otf']
 
+  app.info_plist['UIViewControllerBasedStatusBarAppearance'] = false
+
   app.pods do
     pod 'AFNetworking'
     pod 'SSKeychain'
