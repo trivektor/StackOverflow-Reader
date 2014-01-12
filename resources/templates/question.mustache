@@ -8,8 +8,18 @@
         padding: 10px;
         display: block;
       }
+
+      section {
+        margin-bottom: 20px;
+
+        .lead {
+          font-size: 40px;
+          margin-top: 0;
+        }
+      }
+
       .score {
-        font-size: 24px; font-weight: bold; float: left; width: 40px; text-align: center
+        font-size: 24px; font-weight: 100; float: left; width: 40px; text-align: center
       }
 
       li {
@@ -30,25 +40,28 @@
   <body>
     <main>
       <section>
-        <span class='score'>{{score}}</span>
-        <div class='question_text'>
-          {{question.body}}
+        <h1 class='lead'>{{question.title}}</h1>
+        <div class='clearfix'>
+          <span class='score'>{{question.score}}</span>
+          <div class='question-text'>{{question.body}}</div>
         </div>
       </section>
-      <h3>Answers: {{answer_count}}</h2>
-      <aside class='tags'>
-        {{#question.tags}}
-          <label class='label label-default'>{{.}}</label>
-        {{/question.tags}}
-      </aside>
-      <ul class='list-unstyled answers-list'>
-        {{#answers}}
-          <li class='answer'>
-            <figure class='score'>{{score}}</figure>
-            <div class='details'>{{body}}</div>
-          </li>
-        {{/answers}}
-      </ul>
+      <section>
+        <h2 class='lead'>Answers: {{question.answer_count}}</h2>
+        <aside class='tags'>
+          {{#question.tags}}
+            <label class='label label-default'>{{.}}</label>
+          {{/question.tags}}
+        </aside>
+        <ul class='list-unstyled answers-list'>
+          {{#answers}}
+            <li class='answer'>
+              <figure class='score'>{{score}}</figure>
+              <div class='details'>{{body}}</div>
+            </li>
+          {{/answers}}
+        </ul>
+      </section>
     </main>
   </body>
 </html>
