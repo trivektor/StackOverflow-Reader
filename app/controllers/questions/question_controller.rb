@@ -30,8 +30,10 @@ class QuestionController < UIViewController
   def displayAnswers(notification)
     file = NSBundle.mainBundle.pathForResource('templates/question', ofType: 'mustache')
     html = NSString.stringWithContentsOfFile(file, encoding: NSUTF8StringEncoding, error: nil)
+
     renderedHtml = GRMustacheTemplate.renderObject(NSDictionary.dictionaryWithDictionary({
-      question: question.to_json, answers: notification.object.map { |a| a.to_json }
+      question: question.to_json,
+      answers: notification.object.map { |a| a.to_json }
     }), fromString: html, error: nil)
     @webView.loadHTMLString(decodeHTMLEntities(renderedHtml), baseURL: NSURL.fileURLWithPath(NSBundle.mainBundle.bundlePath))
   end

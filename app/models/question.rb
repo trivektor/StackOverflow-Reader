@@ -1,5 +1,3 @@
-GRMustacheConfiguration.defaultConfiguration.contentType = GRMustacheContentTypeHTML;
-
 class Question
 
   include AFNetworkingClient
@@ -19,6 +17,10 @@ class Question
     @data[:title]
   end
 
+  def body
+    @data[:body]
+  end
+
   def tags
     @data[:tags]
   end
@@ -34,7 +36,7 @@ class Question
       header 'Accept', 'application/json'
       response_serializer :json
     end
-    @@client.get('questions', site: STACK_OVERFLOW_SITE_PARAM) do |result|
+    @@client.get('questions', site: STACK_OVERFLOW_SITE_PARAM, filter: 'withbody') do |result|
       'TopQuestionsFetched'.post_notification(result.object[:items].map { |q| self.new(q) })
     end
   end

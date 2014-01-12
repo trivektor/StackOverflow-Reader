@@ -4,19 +4,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' type='text/css' href='http://getbootstrap.com/dist/css/bootstrap.min.css'>
     <style>
-      li {
+      main {
         padding: 10px;
-        border-bottom: 1px solid #ccc;
+        display: block;
+      }
+      .score {
+        font-size: 24px; font-weight: bold; float: left; width: 40px; text-align: center
+      }
+
+      li {
+        padding: 10px 0;
+        border-top: 1px solid #eee;
+      }
+
+      .tags {
+        display: block; padding: 10px 0; border-top: 1px solid #eee
+      }
+
+      .answer .details,
+      .question-text {
+        padding-left: 50px
       }
     </style>
   </head>
   <body>
-    <ul class='list-unstyled'>
-      {{#answers}}
-        <li>
-          {{body}}
-        </li>
-      {{/answers}}
-    </ul>
+    <main>
+      <section>
+        <span class='score'>{{score}}</span>
+        <div class='question_text'>
+          {{question.body}}
+        </div>
+      </section>
+      <h3>Answers: {{answer_count}}</h2>
+      <aside class='tags'>
+        {{#question.tags}}
+          <label class='label label-default'>{{.}}</label>
+        {{/question.tags}}
+      </aside>
+      <ul class='list-unstyled answers-list'>
+        {{#answers}}
+          <li class='answer'>
+            <figure class='score'>{{score}}</figure>
+            <div class='details'>{{body}}</div>
+          </li>
+        {{/answers}}
+      </ul>
+    </main>
   </body>
 </html>
