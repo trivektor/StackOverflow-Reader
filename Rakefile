@@ -45,5 +45,7 @@ Motion::Project::App.setup do |app|
     pod 'FontAwesome+iOS'
     pod 'MWFeedParser'
     pod 'RESideMenu'
+    pod 'GRMustache'
   end
+
 end

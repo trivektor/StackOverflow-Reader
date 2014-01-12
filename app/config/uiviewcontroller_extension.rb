@@ -24,4 +24,17 @@ module UIViewControllerExtension
     table
   end
 
+  def createWebView(options={})
+    webView = UIWebView.alloc.initWithFrame(options[:frame] || self.view.bounds)
+    webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight
+    webView.delegate = self
+    webView
+  end
+
+  def loadTemplate(path, type='mustache')
+    file = NSBundle.mainBundle.pathForResource(path, ofType: type)
+    html = NSString.stringWithContentsOfFile(file, encoding: NSUTF8StringEncoding, error: nil)
+    GRMustacheTemplate.templateFromString(html, error: nil)
+  end
+
 end

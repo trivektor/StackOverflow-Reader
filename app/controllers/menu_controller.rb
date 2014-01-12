@@ -10,20 +10,20 @@ class MenuCell < UITableViewCell
   end
 
   def createLabels
-    whiteColor = UIColor.whiteColor
+    blackColor = UIColor.blackColor
     clearColor = UIColor.clearColor
     shadowColor = '#000'.uicolor(0.1)
     shadowOffset = CGSizeMake(1, 1)
 
     @iconLabel = UILabel.alloc.initWithFrame([[15, 9], [25, 25]])
-    @iconLabel.textColor = whiteColor
+    @iconLabel.textColor = blackColor
     @iconLabel.backgroundColor = clearColor
     @iconLabel.font = FontAwesome.fontWithSize(16)
     @iconLabel.shadowColor = shadowColor
     @iconLabel.shadowOffset = shadowOffset
 
     @textLabel = UILabel.alloc.initWithFrame([[45, 11], [243, 21]])
-    @textLabel.textColor = whiteColor
+    @textLabel.textColor = blackColor
     @textLabel.backgroundColor = clearColor
     @textLabel.font = 'Helvetica-Neue Light'.uifont(13)
     @textLabel.shadowColor = shadowColor
@@ -81,7 +81,7 @@ class MenuController < UIViewController
     clearColor = UIColor.clearColor
     @table.backgroundColor = clearColor
     @table.separatorColor = clearColor
-    view.backgroundColor = '#34495e'.uicolor
+    view.backgroundColor = '#fff'.uicolor
     view.addSubview(@table)
   end
 

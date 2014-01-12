@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' type='text/css' href='http://getbootstrap.com/dist/css/bootstrap.min.css'>
+    <style>
+      li {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class='list-unstyled'>
+      {{#answers}}
+        <li>
+          {{body}}
+        </li>
+      {{/answers}}
+    </ul>
+  </body>
+</html>

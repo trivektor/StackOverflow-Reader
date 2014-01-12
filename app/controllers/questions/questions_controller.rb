@@ -114,7 +114,7 @@ class QuestionsController < UIViewController
   end
 
   def tableView(tableView, didSelectRowAtIndexPath: indexPath)
-    questionController = QuestionController.new.initWithQuestion(questionAtIndexPath(indexPath))
+    questionController = QuestionController.alloc.initWithQuestion(questionAtIndexPath(indexPath))
     navigationController.pushViewController(questionController, animated: true)
   end
 
