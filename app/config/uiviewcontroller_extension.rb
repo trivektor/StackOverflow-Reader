@@ -31,6 +31,17 @@ module UIViewControllerExtension
     webView
   end
 
+  def createFontAwesomeButton(options={})
+    btn = UIBarButtonItem.titled(FontAwesome.icon(options[:icon])) do
+      self.send(options[:touchHandler])
+    end
+
+    btn.setTitleTextAttributes({
+      UITextAttributeFont => FontAwesome.fontWithSize(options[:size] || 20),
+      UITextAttributeTextColor => (options[:color] || :black).uicolor
+    }, forState: UIControlStateNormal)
+  end
+
   def loadTemplate(path, type='mustache')
     file = NSBundle.mainBundle.pathForResource(path, ofType: type)
     html = NSString.stringWithContentsOfFile(file, encoding: NSUTF8StringEncoding, error: nil)

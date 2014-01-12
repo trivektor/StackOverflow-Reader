@@ -42,6 +42,10 @@ class QuestionController < UIViewController
     navigationItem.title = decodeHTMLEntities(@question.title)
     @webView = createWebView
     view.addSubview(@webView)
+    navigationItem.rightBarButtonItem = createFontAwesomeButton(icon: 'cog', color: UIColor.whiteColor, touchHandler: 'displayOptions')
+  end
+
+  def displayOptions
   end
 
 end
