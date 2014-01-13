@@ -20,6 +20,12 @@ class Tag
     count < 1000 ? count : count.to_i.string_with_style
   end
 
+  def fetch_questions
+    AFMotion::Client.shared.get('questions', site: STACK_OVERFLOW_SITE_PARAM, tagged: name) do |result|
+      'QuestionsByTagFetched'.post_notification(result.object[:items].to_a.map { |q| Question.new(q) })
+    end
+  end
+
   def self.top(options={})
     @@client ||= AFMotion::Client.build(STACK_EXCHANGE_API_HOST) do
       header 'Accept', 'application/json'

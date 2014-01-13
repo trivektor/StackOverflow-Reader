@@ -39,11 +39,20 @@ class TagsController < BaseController
       QuestionCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: 'Cell')
     end
 
-    tag = @tags[indexPath.row]
+    tag = tagForRowAtIndexPath(indexPath)
 
     cell.textLabel.text = "#{tag.name} (#{tag.formatted_count})"
     cell.textLabel.font = 'HelveticaNeue-Light'.uifont(14)
     cell
+  end
+
+  def tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    tagQuestionsController = TagQuestionsController.alloc.initWithTag(tagForRowAtIndexPath(indexPath))
+    navigationController.pushViewController(tagQuestionsController, animated: true)
+  end
+
+  def tagForRowAtIndexPath(indexPath)
+    @tags[indexPath.row]
   end
 
   def displayTags(notification)

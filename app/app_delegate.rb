@@ -17,6 +17,7 @@ class AppDelegate
     )
 
     UINavigationBar.appearance.setBarTintColor('#3498db'.uicolor)
+    UINavigationBar.appearance.setTintColor(whiteColor)
 
     UIBarButtonItem.appearance.setTintColor(whiteColor)
 

@@ -136,3 +136,28 @@ class TopQuestionsController < QuestionsController
   end
 
 end
+
+class TagQuestionsController < QuestionsController
+
+  def initWithTag(tag)
+    @tag = tag
+    @questions = []
+    self
+  end
+
+  def viewDidLoad
+    super
+    navigationItem.title = @tag.name
+    registerEvents
+    @tag.fetch_questions
+  end
+
+  def registerEvents
+    'QuestionsByTagFetched'.add_observer(self, 'displayQuestions:')
+  end
+
+  def numberOfRowsInSection
+    @questions.count
+  end
+
+end
