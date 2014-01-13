@@ -106,6 +106,8 @@ class MenuController < UIViewController
 
   def tableView(tableView, didSelectRowAtIndexPath: indexPath)
     case indexPath.row
+    when 0
+      navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(TopQuestionsController.new))
     when 1
       navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(TagsController.new))
     end

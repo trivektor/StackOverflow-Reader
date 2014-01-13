@@ -1,7 +1,4 @@
-class QuestionController < UIViewController
-
-  include UIViewControllerExtension
-  include AppHelper
+class QuestionController < BaseController
 
   attr_accessor :question
 
