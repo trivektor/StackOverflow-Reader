@@ -53,10 +53,44 @@
         padding-left: 50px
       }
 
+      .user-module {
+        display: inline-block;
+        padding: 4px;
+        overflow: hidden;
+        background: #eee;
+        margin-top: 10px;
+        clear: both;
+      }
+
+      .user-module .name {
+        margin-left: 28px;
+        display: block;
+      }
+
+      .user-module .reputation {
+        font-weight: bold;
+      }
+
       .user-avatar {
+        float: left;
         width: 24px;
       }
+
+      .block-element {
+        display: block;
+      }
     </style>
+    <script src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.0/moment.min.js'></script>
+    <script>
+      $(function() {
+        $('.time').each(function() {
+            var $this = $(this);
+            var timestamp = (new Date($this.attr('data-timestamp')*1000));
+            $this.html(moment(timestamp).format('LLLL'));
+        });
+      });
+    </script>
   </head>
   <body>
     <main>
@@ -64,7 +98,19 @@
         <h1 class='lead'>{{question.title}}</h1>
         <div class='clearfix'>
           <span class='score'>{{question.score}}</span>
-          <div class='question-text'>{{question.body}}</div>
+          <div class='question-text'>
+            <div class='body'>{{question.body}}</div>
+            <time class='block-element text-muted'>
+              <small>asked <span class='time' data-timestamp='{{question.creation_date}}'></span></small>
+            </time>
+            <div class='user-module'>
+              <img class='user-avatar' src='{{question.owner.profile_image}}' alt='question.owner.display_name' />
+              <span class='name'>
+                <span>{{question.owner.display_name}}</span>
+                <figure class='reputation'>{{question.owner.reputation}}</figure>
+              </span>
+            </div>
+          </div>
         </div>
       </section>
       <section>
@@ -78,7 +124,19 @@
           {{#answers}}
             <li class='answer'>
               <figure class='score'>{{score}}</figure>
-              <div class='details'>{{body}}</div>
+              <div class='details'>
+                <div class='body'>{{body}}</div>
+                <time class='block-element'>
+                  <small>answered <span class='time' data-timestamp='{{creation_date}}'></span></small>
+                </time>
+                <div class='user-module'>
+                  <img class='user-avatar' src='{{owner.profile_image}}' alt='{{owner.display_name}}' />
+                  <span class='name'>
+                    <span>{{owner.display_name}}</span>
+                    <figure class='reputation'>{{owner.reputation}}</figure>
+                  </span>
+                </div>
+              </div>
             </li>
           {{/answers}}
         </ul>

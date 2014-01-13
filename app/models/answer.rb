@@ -10,8 +10,12 @@ class Answer
     @data[:body]
   end
   
+  def owner
+    User.new(@data[:owner])
+  end
+
   def to_json
-    @data
+    @data.merge(owner: owner.to_json)
   end
 
 end

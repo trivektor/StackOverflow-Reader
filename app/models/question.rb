@@ -25,6 +25,10 @@ class Question
     @data[:tags]
   end
 
+  def owner
+    User.new(@data[:owner])
+  end
+
   def fetchAnswers
     AFMotion::Client.shared.get("questions/#{id}/answers", site: STACK_OVERFLOW_SITE_PARAM, filter: 'withbody') do |result|
       'AnswersFetched'.post_notification(result.object[:items].to_a.map { |a| Answer.new(a) })
@@ -37,7 +41,7 @@ class Question
       response_serializer :json
     end
     @@client.get('questions', site: STACK_OVERFLOW_SITE_PARAM, filter: 'withbody') do |result|
-      'TopQuestionsFetched'.post_notification(result.object[:items].map { |q| self.new(q) })
+      'TopQuestionsFetched'.post_notification(result.object[:items].to_a.map { |q| self.new(q) })
     end
   end
 
