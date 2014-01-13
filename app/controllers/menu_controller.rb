@@ -71,6 +71,8 @@ class MenuController < UIViewController
   include UIViewControllerExtension
   include AppHelper
 
+  private
+
   def viewDidLoad
     performHousekeepingTasks
   end
@@ -100,6 +102,18 @@ class MenuController < UIViewController
 
     cell.renderForRowAtIndexPath(indexPath)
     cell
+  end
+
+  def tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    case indexPath.row
+    when 1
+      navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(TagsController.new))
+    end
+  end
+
+  def navigateToSelectedController(controller)
+    sideMenuViewController.setContentViewController(controller)
+    sideMenuViewController.hideMenuViewController
   end
 
 end
