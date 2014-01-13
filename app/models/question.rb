@@ -46,7 +46,7 @@ class Question
   end
 
   def to_json
-    @data
+    @data.merge(owner: owner.to_json)
   end
 
 end

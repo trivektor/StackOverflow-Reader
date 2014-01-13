@@ -58,7 +58,7 @@
         padding: 4px;
         overflow: hidden;
         background: #eee;
-        margin-top: 10px;
+        margin: 10px 0;
         clear: both;
       }
 
@@ -107,7 +107,7 @@
               <img class='user-avatar' src='{{question.owner.profile_image}}' alt='question.owner.display_name' />
               <span class='name'>
                 <span>{{question.owner.display_name}}</span>
-                <figure class='reputation'>{{question.owner.reputation}}</figure>
+                <figure class='reputation'>{{question.owner.formatted_reputation}}</figure>
               </span>
             </div>
           </div>
@@ -133,7 +133,7 @@
                   <img class='user-avatar' src='{{owner.profile_image}}' alt='{{owner.display_name}}' />
                   <span class='name'>
                     <span>{{owner.display_name}}</span>
-                    <figure class='reputation'>{{owner.reputation}}</figure>
+                    <figure class='reputation'>{{owner.formatted_reputation}}</figure>
                   </span>
                 </div>
               </div>
