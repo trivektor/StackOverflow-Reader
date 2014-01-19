@@ -1,7 +1,6 @@
 class BaseController < UIViewController
 
   include UIViewControllerExtension
-  include AppHelper
 
   def performHousekeepingTasks
     if navigationController.viewControllers.count == 1

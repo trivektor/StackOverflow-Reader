@@ -32,11 +32,11 @@ class QuestionController < BaseController
       question: question.to_json,
       answers: notification.object.map { |a| a.to_json }
     }), fromString: html, error: nil)
-    @webView.loadHTMLString(decodeHTMLEntities(renderedHtml), baseURL: NSURL.fileURLWithPath(NSBundle.mainBundle.bundlePath))
+    @webView.loadHTMLString(AppHelper.decodeHTMLEntities(renderedHtml), baseURL: NSURL.fileURLWithPath(NSBundle.mainBundle.bundlePath))
   end
 
   def performHousekeepingTasks
-    navigationItem.title = decodeHTMLEntities(@question.title)
+    navigationItem.title = AppHelper.decodeHTMLEntities(@question.title)
     @webView = createWebView
     view.addSubview(@webView)
     navigationItem.rightBarButtonItem = createFontAwesomeButton(icon: 'cog', color: UIColor.whiteColor, touchHandler: 'displayOptions')

@@ -37,6 +37,7 @@ class AppDelegate
     sideMenuController.delegate = UIApplication.sharedApplication.delegate
 
     self.window.rootViewController = sideMenuController
+    User.fetchMe(AppHelper.getAccessToken) if AppHelper.getAccessToken
     true
   end
 end

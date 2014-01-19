@@ -1,7 +1,6 @@
 class MenuCell < UITableViewCell
-  include AppHelper
 
-  attr_accessor :iconLabel
+  attr_accessor :iconLabel, :textLabel, :image
 
   def initWithStyle(style, reuseIdentifier: identifier)
     super
@@ -10,24 +9,18 @@ class MenuCell < UITableViewCell
   end
 
   def createLabels
-    blackColor = UIColor.blackColor
+    whiteColor = '#fff'.uicolor
     clearColor = UIColor.clearColor
-    shadowColor = '#000'.uicolor(0.1)
-    shadowOffset = CGSizeMake(1, 1)
 
     @iconLabel = UILabel.alloc.initWithFrame([[15, 9], [25, 25]])
-    @iconLabel.textColor = blackColor
+    @iconLabel.textColor = whiteColor
     @iconLabel.backgroundColor = clearColor
     @iconLabel.font = FontAwesome.fontWithSize(16)
-    @iconLabel.shadowColor = shadowColor
-    @iconLabel.shadowOffset = shadowOffset
 
     @textLabel = UILabel.alloc.initWithFrame([[45, 11], [243, 21]])
-    @textLabel.textColor = blackColor
+    @textLabel.textColor = whiteColor
     @textLabel.backgroundColor = clearColor
-    @textLabel.font = 'Helvetica-Neue Light'.uifont(13)
-    @textLabel.shadowColor = shadowColor
-    @textLabel.shadowOffset = shadowOffset
+    @textLabel.font = 'Helvetica-Neue Thin'.uifont(13)
 
     contentView.addSubview(@iconLabel)
     contentView.addSubview(@textLabel)
@@ -41,25 +34,41 @@ class MenuCell < UITableViewCell
     self.backgroundColor = UIColor.clearColor
     case indexPath.row
     when 0
+      if CurrentUserManager.sharedInstance
+        @image = UIImageView.alloc.initWithFrame([[15, 9], [26, 26]])
+
+        contentView.addSubview(@image)
+
+        currentUser = CurrentUserManager.sharedInstance
+        userImageData = NSData.dataWithContentsOfURL(currentUser.profile_image.nsurl)
+        @image.image = UIImage.imageWithData(userImageData)
+        @image.layer.masksToBounds = true
+        @image.layer.cornerRadius = 3
+        @textLabel.text = currentUser.display_name
+      else
+        @textLabel.text = 'Login'
+        @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-lock')
+      end
+    when 1
       @textLabel.text = 'Questions'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-question')
-    when 1
+    when 2
       @textLabel.text = 'Tags'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-tags')
-    when 2
+    when 3
       @textLabel.text = 'Users'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-user')
-    when 3
+    when 4
       @textLabel.text = 'Badges'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-flag')
-    when 4
+    when 5
       @textLabel.text = 'Unanswered'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-bolt')
     end
 
     if indexPath.row < 4
       bottomBorder = UIView.alloc.initWithFrame([[0, 43], [180, 0.5]])
-      bottomBorder.backgroundColor = '#fff'.uicolor(0.2)
+      bottomBorder.backgroundColor = '#fff'.uicolor(0.1)
       contentView.addSubview(bottomBorder)
     end
   end
@@ -69,22 +78,25 @@ end
 class MenuController < UIViewController
 
   include UIViewControllerExtension
-  include AppHelper
 
   private
 
   def viewDidLoad
     performHousekeepingTasks
+    registerEvents
   end
 
   def performHousekeepingTasks
     frame = self.view.frame
-    @table = createTable(cell: MenuCell, frame: CGRectMake(0, 80, frame.size.width, frame.size.height))
     clearColor = UIColor.clearColor
-    @table.backgroundColor = clearColor
-    @table.separatorColor = clearColor
-    view.backgroundColor = '#fff'.uicolor
+    @table = createTable(cell: MenuCell, frame: CGRectMake(0, 80, frame.size.width, frame.size.height), background_color: clearColor, separator_color: clearColor)
+    view.backgroundColor = '#222'.uicolor
     view.addSubview(@table)
+  end
+
+  def registerEvents
+    'PostLoginReload'.add_observer(self, 'reloadAfterLogin')
+    'MyselfFetched'.add_observer(self, 'reloadAfterLogin')
   end
 
   def numberOfSectionsInTableView(tableView)
@@ -92,7 +104,7 @@ class MenuController < UIViewController
   end
 
   def tableView(tableView, numberOfRowsInSection: section)
-    5
+    6
   end
 
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
@@ -107,8 +119,12 @@ class MenuController < UIViewController
   def tableView(tableView, didSelectRowAtIndexPath: indexPath)
     case indexPath.row
     when 0
-      navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(TopQuestionsController.new))
+      controller = UINavigationController.alloc.initWithRootViewController(LoginController.new)
+      controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical
+      presentModalViewController(controller, animated: true)
     when 1
+      navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(TopQuestionsController.new))
+    when 2
       navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(TagsController.new))
     end
   end
@@ -116,6 +132,10 @@ class MenuController < UIViewController
   def navigateToSelectedController(controller)
     sideMenuViewController.setContentViewController(controller)
     sideMenuViewController.hideMenuViewController
+  end
+
+  def reloadAfterLogin
+    @table.reloadData
   end
 
 end

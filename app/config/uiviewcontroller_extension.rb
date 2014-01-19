@@ -10,10 +10,10 @@ module UIViewControllerExtension
     table.delegate = self
     table.dataSource = self
 
-    if options[:scrollEnabled].nil?
+    if options[:scroll_enabled].nil?
       table.setScrollEnabled(true)
     else
-      table.setScrollEnabled(options[:scrollEnabled])
+      table.setScrollEnabled(options[:scroll_enabled])
     end
 
     unless options[:cell].nil?
@@ -21,6 +21,8 @@ module UIViewControllerExtension
     end
 
     table.backgroundView = nil
+    table.backgroundColor = options[:background_color] if options[:background_color]
+    table.separatorColor = options[:separator_color] if options[:separator_color]
     table
   end
 
