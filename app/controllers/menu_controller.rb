@@ -119,6 +119,7 @@ class MenuController < UIViewController
   def tableView(tableView, didSelectRowAtIndexPath: indexPath)
     case indexPath.row
     when 0
+      sideMenuViewController.hideMenuViewController
       controller = UINavigationController.alloc.initWithRootViewController(LoginController.new)
       controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical
       presentModalViewController(controller, animated: true)

@@ -5,6 +5,7 @@ class LoginController < UIViewController
   private
 
   def viewDidLoad
+    @authenticated = false
     performHousekeepingTasks
     registerEvents
     loadLoginPage
@@ -16,48 +17,36 @@ class LoginController < UIViewController
 
   def performHousekeepingTasks
     navigationItem.title = 'Login'
-    @webView = createWebView
+    size = view.bounds.size
+    @webView = createWebView(frame: [[0, 0], [size.width - 2, size.height - 2]])
+    @webView2 = createWebView(frame: [[0, size.height - 2], [size.width, 2]])
     view.addSubview(@webView)
+    view.addSubview(@webView2)
+    loadLoginPage
   end
 
   def loadLoginPage
-    # file = NSBundle.mainBundle.pathForResource('templates/login', ofType: 'mustache')
-    # html = NSString.stringWithContentsOfFile(file, encoding: NSUTF8StringEncoding, error: nil)
-    #
-    # renderedHtml = GRMustacheTemplate.renderObject({}, fromString: html, error: nil)
-    # @webView.loadHTMLString(decodeHTMLEntities(renderedHtml), baseURL: NSURL.fileURLWithPath(NSBundle.mainBundle.bundlePath))
-    @webView.loadRequest("https://stackexchange.com/oauth?client_id=#{STACK_EXCHANGE_CLIENT_ID}&scope=#{STACK_EXCHANGE_SCOPES.join(',')}&redirect_uri=#{STACK_EXCHANGE_REDIRECT_URI}".nsurl.nsurlrequest)
+    puts 'start loading oauth url'
+    @webView.loadRequest(OAUTH_URL.nsurl.nsurlrequest)
   end
 
   def webViewDidFinishLoad(webView)
+    return if @authenticated
+    @webView2.loadRequest(OAUTH_URL.nsurl.nsurlrequest)
     url = webView.request.URL.absoluteString
+    puts "absolute url is #{url}"
 
-    if url.include? 'stackmotion.herokuapp.com'
-      puts url
+    if webView == @webView2 && url.include?('http://stackmotion.herokuapp.com/#access_token')
+      url = url.gsub('/#', '?')
       parser = DDURLParser.alloc.initWithURLString(url)
-      code = parser.valueForVariable('code')
-      puts "code is #{code}"
+      access_token = parser.valueForVariable('access_token')
+      puts "access_token is #{access_token}"
 
-      params = {
-        client_id: STACK_EXCHANGE_CLIENT_ID,
-        client_secret: STACK_EXCHANGE_SECRET,
-        code: code,
-        redirect_uri: STACK_EXCHANGE_REDIRECT_URI
-      }
+      return unless access_token
 
-      client = AFMotion::Client.build('https://stackexchange.com') do
-        response_serializer :form
-      end
-
-      client.post("/oauth/access_token", params) do |result|
-        if result.success?
-          token = result.object.to_s.gsub('access_token=', '')
-          SSKeychain.setPassword(token, forService: 'access_token', account: APP_KEYCHAIN_ACCOUNT)
-          User.fetchMe(token)
-        else
-          puts result.error.localizedDescription
-        end
-      end
+      SSKeychain.setPassword(access_token, forService: 'access_token', account: APP_KEYCHAIN_ACCOUNT)
+      User.fetchMe(access_token)
+      @authenticated = true
     end
 
     true
