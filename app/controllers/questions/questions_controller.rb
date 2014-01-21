@@ -55,6 +55,8 @@ class QuestionsController < BaseController
     self
   end
 
+  private
+
   def viewDidLoad
     super
     performHousekeepingTasks
@@ -62,11 +64,10 @@ class QuestionsController < BaseController
     Question.top
   end
 
-  private
-
   def performHousekeepingTasks
     super
     @table = createTable(cell: QuestionCell)
+    navigationItem.rightBarButtonItem = createFontAwesomeButton(icon: 'search', color: UIColor.whiteColor, touchHandler: 'search')
     view.addSubview(@table)
   end
 
@@ -125,6 +126,11 @@ class QuestionsController < BaseController
     self.sideMenuViewController.presentMenuViewController
   end
 
+  def search
+    controller = QuestionsSearchController.new
+    navigationController.pushViewController(controller, animated: true)
+  end
+
 end
 
 class TopQuestionsController < QuestionsController
@@ -132,6 +138,54 @@ class TopQuestionsController < QuestionsController
   def viewDidLoad
     super
     navigationItem.title = 'Top Questions'
+  end
+
+end
+
+class QuestionsSearchController < UIViewController
+
+  include UIViewControllerExtension
+
+  def init
+    super
+    @results = []
+    self
+  end
+
+  private
+
+  def viewDidLoad
+    super
+    performHousekeepingTasks
+  end
+
+  def performHousekeepingTasks
+    navigationItem.title = 'Search'
+    createSearchBar
+    size = view.bounds.size
+    @table = createTable(frame: [[0, 44], [size.width, size.height - 44]])
+    view.addSubview(@table)
+  end
+
+  def createSearchBar
+    @searchBar = UISearchBar.alloc.initWithFrame([[0, 0], [1024, 44]])
+    @searchBar.tintColor = '#fff'.uicolor
+    @searchBar.backgroundColor = '#fff'.uicolor
+    @searchBar.delegate = self
+    @searchBar.placeholder = 'Search'
+    view.addSubview(@searchBar)
+  end
+
+  def numberOfSectionsInTableView(tableView)
+    1
+  end
+
+  def tableView(tableView, numberOfRowsInSection: section)
+    @results.count
+  end
+
+  def tableView(tableView, cellForRowAtIndexPath: indexPath)
+    nil
   end
 
 end
