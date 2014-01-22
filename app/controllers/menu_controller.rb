@@ -128,6 +128,8 @@ class MenuController < UIViewController
       navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(TopQuestionsController.new))
     when 2
       navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(TagsController.new))
+    when 3
+      navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(UsersController.new))
     end
   end
 

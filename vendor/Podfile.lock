@@ -31,6 +31,7 @@ PODS:
   - MWFeedParser/NSDate+InternetDateTime (0.0.1)
   - MWFeedParser/NSString+HTML (0.0.1)
   - MWFeedParser/NSString+XMLEntities (0.0.1)
+  - NSData+Base64 (1.0.0)
   - RESideMenu (3.4)
   - SSKeychain (1.2.1)
 
@@ -41,6 +42,7 @@ DEPENDENCIES:
   - FontAwesomeIconFactory
   - GRMustache
   - MWFeedParser
+  - NSData+Base64
   - RESideMenu
   - SSKeychain
 
@@ -51,6 +53,7 @@ SPEC CHECKSUMS:
   GRMustache: 7b2520d67b6373484c8b2c08b9788af90a461d61
   JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
   MWFeedParser: 2ca0852fac352f8333d5f46fdd4b583b921e0c4e
+  NSData+Base64: 4819562faee4544e3cf5703f2139820b09732b28
   RESideMenu: d8d6330052e0348718826045b912a1c71748357d
   SSKeychain: d18926838c2e7cd342e2a49e9f869858e49f035a
 

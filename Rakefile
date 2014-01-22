@@ -46,6 +46,7 @@ Motion::Project::App.setup do |app|
     pod 'MWFeedParser'
     pod 'RESideMenu'
     pod 'GRMustache'
+    pod 'NSData+Base64'
   end
 
 end
