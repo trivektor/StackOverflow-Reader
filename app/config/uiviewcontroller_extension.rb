@@ -50,4 +50,12 @@ module UIViewControllerExtension
     GRMustacheTemplate.templateFromString(html, error: nil)
   end
 
+  def showProgress
+    MRProgressOverlayView.showOverlayAddedTo(self.view, animated: true)
+  end
+
+  def hideProgress
+    MRProgressOverlayView.dismissOverlayForView(self.view, animated: true)
+  end
+
 end

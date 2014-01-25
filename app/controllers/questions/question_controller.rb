@@ -14,6 +14,7 @@ class QuestionController < BaseController
     performHousekeepingTasks
     registerEvents
     fetchAnswers
+    showProgress
   end
 
   def registerEvents
@@ -33,6 +34,7 @@ class QuestionController < BaseController
       answers: notification.object.map { |a| a.to_json }
     }), fromString: html, error: nil)
     @webView.loadHTMLString(AppHelper.decodeHTMLEntities(renderedHtml), baseURL: NSURL.fileURLWithPath(NSBundle.mainBundle.bundlePath))
+    hideProgress
   end
 
   def performHousekeepingTasks

@@ -22,6 +22,7 @@ PODS:
   - GRMustache (6.8.4):
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
+  - MRProgress (0.3.0)
   - MWFeedParser (0.0.1):
     - MWFeedParser/Feed
     - MWFeedParser/NSDate+InternetDateTime
@@ -41,6 +42,7 @@ DEPENDENCIES:
   - FontAwesome+iOS
   - FontAwesomeIconFactory
   - GRMustache
+  - MRProgress
   - MWFeedParser
   - NSData+Base64
   - RESideMenu
@@ -52,6 +54,7 @@ SPEC CHECKSUMS:
   FontAwesomeIconFactory: eb4101e952987a817b1f37b73f45cd59acb1a0bb
   GRMustache: 7b2520d67b6373484c8b2c08b9788af90a461d61
   JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
+  MRProgress: 4f086e91313001ad4a622f1ea0d19bb8aa958f6a
   MWFeedParser: 2ca0852fac352f8333d5f46fdd4b583b921e0c4e
   NSData+Base64: 4819562faee4544e3cf5703f2139820b09732b28
   RESideMenu: d8d6330052e0348718826045b912a1c71748357d

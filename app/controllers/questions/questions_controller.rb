@@ -68,6 +68,7 @@ class QuestionsController < BaseController
     performHousekeepingTasks
     registerEvents
     Question.top
+    showProgress
   end
 
   def performHousekeepingTasks
@@ -126,6 +127,7 @@ class QuestionsController < BaseController
   def displayQuestions(notification)
     @questions = notification.object
     @table.reloadData
+    hideProgress
   end
 
   def showMenu
@@ -187,6 +189,7 @@ class QuestionsSearchController < QuestionsController
     term = searchBar.text
     return unless term
     Question.search(tagged: term)
+    showProgress
   end
 
 end

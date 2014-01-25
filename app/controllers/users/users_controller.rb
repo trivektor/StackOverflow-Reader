@@ -60,6 +60,7 @@ class UsersController < BaseController
     performHousekeepingTasks
     registerEvents
     User.fetchUsers(sort: 'reputation', order: 'desc')
+    showProgress
   end
 
   def performHousekeepingTasks
@@ -99,6 +100,7 @@ class UsersController < BaseController
   def displayUsers(notification)
     @users = notification.object
     @table.reloadData
+    hideProgress
   end
 
 end
