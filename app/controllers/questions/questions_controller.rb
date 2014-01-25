@@ -148,21 +148,16 @@ class TopQuestionsController < QuestionsController
 
 end
 
-class QuestionsSearchController < UIViewController
+class QuestionsSearchController < QuestionsController
 
   include UIViewControllerExtension
-
-  def init
-    super
-    @results = []
-    self
-  end
 
   private
 
   def viewDidLoad
     super
     performHousekeepingTasks
+    registerEvents
   end
 
   def performHousekeepingTasks
@@ -173,8 +168,13 @@ class QuestionsSearchController < UIViewController
     view.addSubview(@table)
   end
 
+  def registerEvents
+    'QuestionsFetched'.add_observer(self, 'displayQuestions:')
+  end
+
   def createSearchBar
-    @searchBar = UISearchBar.alloc.initWithFrame([[0, 0], [1024, 44]])
+    size = view.bounds.size
+    @searchBar = UISearchBar.alloc.initWithFrame([[0, 0], [size.width, 44]])
     @searchBar.tintColor = '#fff'.uicolor
     @searchBar.backgroundColor = '#fff'.uicolor
     @searchBar.delegate = self
@@ -182,16 +182,11 @@ class QuestionsSearchController < UIViewController
     view.addSubview(@searchBar)
   end
 
-  def numberOfSectionsInTableView(tableView)
-    1
-  end
-
-  def tableView(tableView, numberOfRowsInSection: section)
-    @results.count
-  end
-
-  def tableView(tableView, cellForRowAtIndexPath: indexPath)
-    nil
+  def searchBarSearchButtonClicked(searchBar)
+    view.endEditing(true)
+    term = searchBar.text
+    return unless term
+    Question.search(tagged: term)
   end
 
 end
