@@ -40,7 +40,7 @@ class Question
       header 'Accept', 'application/json'
       response_serializer :json
     end
-    @@client.get('questions', site: STACK_OVERFLOW_SITE_PARAM, filter: 'withbody') do |result|
+    @@client.get('questions', site: STACK_OVERFLOW_SITE_PARAM, filter: 'withbody', access_token: AppHelper.access_token, key: STACK_EXCHANGE_KEY) do |result|
       'TopQuestionsFetched'.post_notification(result.object[:items].to_a.map { |q| self.new(q) })
     end
   end

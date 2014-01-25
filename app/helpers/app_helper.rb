@@ -2,7 +2,7 @@ class AppHelper
 
   class << self
 
-    def getAccessToken
+    def access_token
       SSKeychain.passwordForService('access_token', account:APP_KEYCHAIN_ACCOUNT)
     end
 
