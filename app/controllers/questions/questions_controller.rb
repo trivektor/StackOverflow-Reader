@@ -13,6 +13,7 @@ class QuestionCell < UITableViewCell
   attr_accessor :question, :titleLabel, :subTitleLabel
 
   CELL_SPACING = 8
+  MAX_WIDTH = 276
 
   def initWithStyle(style, reuseIdentifier: identifier)
     super
@@ -24,11 +25,11 @@ class QuestionCell < UITableViewCell
   end
 
   def render
-    self.contentView.subviews.each { |v| v.removeFromSuperview }
-    maximumLabelSize = CGSizeMake(298, CGFLOAT_MAX)
+    contentView.subviews.each { |v| v.removeFromSuperview }
+    maximumLabelSize = CGSizeMake(MAX_WIDTH, CGFLOAT_MAX)
 
-    titleLabelHeight = question.title.sizeWithFont('HelveticaNeue-Light'.uifont(14), constrainedToSize: maximumLabelSize).height
-    @titleLabel = UILabel.alloc.initWithFrame([[11, CELL_SPACING], [298, titleLabelHeight]])
+    titleLabelHeight = question.title.sizeWithFont('HelveticaNeue'.uifont(14), constrainedToSize: maximumLabelSize).height
+    @titleLabel = UILabel.alloc.initWithFrame([[11, CELL_SPACING], [MAX_WIDTH, titleLabelHeight]])
     @titleLabel.lineBreakMode = NSLineBreakByWordWrapping
     @titleLabel.text = AppHelper.decodeHTMLEntities(@question.title)
     @titleLabel.numberOfLines = 0
@@ -38,7 +39,7 @@ class QuestionCell < UITableViewCell
     self.contentView.addSubview(@titleLabel)
 
     subTitleLabelHeight = question.tags.join(', ').sizeWithFont('HelveticaNeue-Light'.uifont(13), constrainedToSize: maximumLabelSize).height
-    @subTitleLabel = UILabel.alloc.initWithFrame([[11, @titleLabel.frame.size.height + CELL_SPACING*3/2], [298, subTitleLabelHeight + CELL_SPACING]])
+    @subTitleLabel = UILabel.alloc.initWithFrame([[11, @titleLabel.frame.size.height + CELL_SPACING*3/2], [MAX_WIDTH, subTitleLabelHeight + CELL_SPACING]])
     @subTitleLabel.lineBreakMode = NSLineBreakByWordWrapping
     @subTitleLabel.text = AppHelper.decodeHTMLEntities(@question.tags.join(', '))
     @subTitleLabel.numberOfLines = 0
@@ -46,7 +47,8 @@ class QuestionCell < UITableViewCell
     @subTitleLabel.textColor = '#999'.uicolor
     @subTitleLabel.sizeToFit
 
-    self.contentView.addSubview(@subTitleLabel)
+    contentView.addSubview(@subTitleLabel)
+    defineAccessoryType
   end
 
 end
@@ -94,8 +96,8 @@ class QuestionsController < BaseController
   def tableView(tableView, heightForRowAtIndexPath: indexPath)
     # Calculate title label height
     question = questionAtIndexPath(indexPath)
-    maximumLabelSize = CGSizeMake(298, CGFLOAT_MAX)
-    expectedLabelSize1 = AppHelper.decodeHTMLEntities(question.title).sizeWithFont('HelveticaNeue-Light'.uifont(14), constrainedToSize: maximumLabelSize)
+    maximumLabelSize = CGSizeMake(QuestionCell::MAX_WIDTH, CGFLOAT_MAX)
+    expectedLabelSize1 = AppHelper.decodeHTMLEntities(question.title).sizeWithFont('HelveticaNeue'.uifont(14), constrainedToSize: maximumLabelSize)
     expectedLabelSize2 = AppHelper.decodeHTMLEntities(question.tags.join(', ')).sizeWithFont('HelveticaNeue-Light'.uifont(13), constrainedToSize: maximumLabelSize)
     [QuestionCell::CELL_SPACING, expectedLabelSize1.height, QuestionCell::CELL_SPACING, expectedLabelSize2.height, QuestionCell::CELL_SPACING/2].reduce(:+)
   end

@@ -16,7 +16,7 @@ class AppDelegate
       UITextAttributeTextShadowColor => UIColor.clearColor
     )
 
-    UINavigationBar.appearance.setBarTintColor('#3498db'.uicolor)
+    UINavigationBar.appearance.setBarTintColor('#f39c12'.uicolor)
     UINavigationBar.appearance.setTintColor(whiteColor)
 
     UIBarButtonItem.appearance.setTintColor(whiteColor)
@@ -37,7 +37,7 @@ class AppDelegate
     sideMenuController.delegate = UIApplication.sharedApplication.delegate
 
     self.window.rootViewController = sideMenuController
-    User.fetchMe(AppHelper.getAccessToken) if AppHelper.getAccessToken
+    User.fetchMe(AppHelper.access_token) if AppHelper.access_token
     true
   end
 end

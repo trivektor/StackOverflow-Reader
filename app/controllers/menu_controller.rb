@@ -20,7 +20,7 @@ class MenuCell < UITableViewCell
     @textLabel = UILabel.alloc.initWithFrame([[45, 11], [243, 21]])
     @textLabel.textColor = whiteColor
     @textLabel.backgroundColor = clearColor
-    @textLabel.font = 'Helvetica-Neue Thin'.uifont(13)
+    @textLabel.font = 'HelveticaNeue-Light'.uifont(13)
 
     contentView.addSubview(@iconLabel)
     contentView.addSubview(@textLabel)
@@ -68,7 +68,7 @@ class MenuCell < UITableViewCell
 
     if indexPath.row < 4
       bottomBorder = UIView.alloc.initWithFrame([[0, 43], [180, 0.5]])
-      bottomBorder.backgroundColor = '#fff'.uicolor(0.1)
+      bottomBorder.backgroundColor = '#fff'.uicolor(0.05)
       contentView.addSubview(bottomBorder)
     end
   end
