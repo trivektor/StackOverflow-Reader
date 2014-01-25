@@ -35,8 +35,12 @@ class Question
   end
 
   def fetchAnswers
-    AFMotion::Client.shared.get("questions/#{id}/answers", site: STACK_OVERFLOW_SITE_PARAM, filter: 'withbody', access_token: AppHelper.access_token, key: STACK_EXCHANGE_KEY) do |result|
-      'AnswersFetched'.post_notification(result.object[:items].to_a.map { |a| Answer.new(a) })
+    AFMotion::Client.shared.get("questions/#{id}/answers", AppHelper.prepParams(filter: 'withbody')) do |result|
+      if result.success?
+        'AnswersFetched'.post_notification(result.object[:items].to_a.map { |a| Answer.new(a) })
+      else
+        puts result.error.localizedDescription
+      end
     end
   end
 
@@ -45,18 +49,18 @@ class Question
       header 'Accept', 'application/json'
       response_serializer :json
     end
-    @@client.get('questions', site: STACK_OVERFLOW_SITE_PARAM, filter: 'withbody', access_token: AppHelper.access_token, key: STACK_EXCHANGE_KEY) do |result|
-      'TopQuestionsFetched'.post_notification(result.object[:items].to_a.map { |q| self.new(q) })
+
+    @@client.get('questions', AppHelper.prepParams(filter: 'withbody')) do |result|
+      if result.success?
+        'TopQuestionsFetched'.post_notification(result.object[:items].to_a.map { |q| self.new(q) })
+      else
+        puts result.error.localizedDescription
+      end
     end
   end
 
   def self.search(options={})
-    params = {
-      site: STACK_OVERFLOW_SITE_PARAM,
-      access_token: AppHelper.access_token,
-      key: STACK_EXCHANGE_KEY
-    }
-
+    params = prepParams
     SEARCH_PARAMS.each { |p| params.merge!({p => options[p]}) if options[p] }
 
     AFMotion::Client.shared.get('search', params) do |result|

@@ -22,6 +22,14 @@ class AppHelper
       NSString.alloc.initWithString(rawString).stringByDecodingHTMLEntities
     end
 
+    def prepParams(params={})
+      params = {site: STACK_OVERFLOW_SITE_PARAM}
+      if access_token
+        params.merge!(access_token: access_token, key: STACK_EXCHANGE_KEY)
+      end
+      params
+    end
+
   end
 
 end

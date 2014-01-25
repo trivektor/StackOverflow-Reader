@@ -12,38 +12,35 @@ class QuestionCell < UITableViewCell
 
   attr_accessor :question, :titleLabel, :subTitleLabel
 
-  CELL_SPACING = 8
+  CELL_SPACING = 12
   MAX_WIDTH = 276
 
   def initWithStyle(style, reuseIdentifier: identifier)
     super
-    createLabels
     self
-  end
-
-  def createLabels
   end
 
   def render
     contentView.subviews.each { |v| v.removeFromSuperview }
     maximumLabelSize = CGSizeMake(MAX_WIDTH, CGFLOAT_MAX)
 
-    titleLabelHeight = question.title.sizeWithFont('HelveticaNeue'.uifont(14), constrainedToSize: maximumLabelSize).height
+    titleLabelHeight = question.title.sizeWithFont('HelveticaNeue'.uifont(17), constrainedToSize: maximumLabelSize).height
     @titleLabel = UILabel.alloc.initWithFrame([[11, CELL_SPACING], [MAX_WIDTH, titleLabelHeight]])
     @titleLabel.lineBreakMode = NSLineBreakByWordWrapping
     @titleLabel.text = AppHelper.decodeHTMLEntities(@question.title)
     @titleLabel.numberOfLines = 0
-    @titleLabel.font = 'HelveticaNeue-Light'.uifont(14)
+    @titleLabel.font = 'HelveticaNeue-Light'.uifont(17)
     @titleLabel.sizeToFit
 
     self.contentView.addSubview(@titleLabel)
 
-    subTitleLabelHeight = question.tags.join(', ').sizeWithFont('HelveticaNeue-Light'.uifont(13), constrainedToSize: maximumLabelSize).height
+    tags = question.tags.join(', ')
+    subTitleLabelHeight = tags.sizeWithFont('HelveticaNeue-Light'.uifont(15), constrainedToSize: maximumLabelSize).height
     @subTitleLabel = UILabel.alloc.initWithFrame([[11, @titleLabel.frame.size.height + CELL_SPACING*3/2], [MAX_WIDTH, subTitleLabelHeight + CELL_SPACING]])
     @subTitleLabel.lineBreakMode = NSLineBreakByWordWrapping
-    @subTitleLabel.text = AppHelper.decodeHTMLEntities(@question.tags.join(', '))
+    @subTitleLabel.text = AppHelper.decodeHTMLEntities(tags)
     @subTitleLabel.numberOfLines = 0
-    @subTitleLabel.font = 'HelveticaNeue-Light'.uifont(13)
+    @subTitleLabel.font = 'HelveticaNeue-Light'.uifont(15)
     @subTitleLabel.textColor = '#999'.uicolor
     @subTitleLabel.sizeToFit
 
@@ -55,20 +52,20 @@ end
 
 class QuestionsController < BaseController
 
+  include UIViewControllerExtension
+
   def init
     super
     @questions = []
     self
   end
 
-  private
+  protected
 
   def viewDidLoad
     super
     performHousekeepingTasks
     registerEvents
-    Question.top
-    showProgress
   end
 
   def performHousekeepingTasks
@@ -79,7 +76,6 @@ class QuestionsController < BaseController
   end
 
   def registerEvents
-    'TopQuestionsFetched'.add_observer(self, 'displayQuestions:')
   end
 
   def numberOfSectionsInTableView(tableView)
@@ -98,8 +94,8 @@ class QuestionsController < BaseController
     # Calculate title label height
     question = questionAtIndexPath(indexPath)
     maximumLabelSize = CGSizeMake(QuestionCell::MAX_WIDTH, CGFLOAT_MAX)
-    expectedLabelSize1 = AppHelper.decodeHTMLEntities(question.title).sizeWithFont('HelveticaNeue'.uifont(14), constrainedToSize: maximumLabelSize)
-    expectedLabelSize2 = AppHelper.decodeHTMLEntities(question.tags.join(', ')).sizeWithFont('HelveticaNeue-Light'.uifont(13), constrainedToSize: maximumLabelSize)
+    expectedLabelSize1 = AppHelper.decodeHTMLEntities(question.title).sizeWithFont('HelveticaNeue'.uifont(17), constrainedToSize: maximumLabelSize)
+    expectedLabelSize2 = AppHelper.decodeHTMLEntities(question.tags.join(', ')).sizeWithFont('HelveticaNeue-Light'.uifont(15), constrainedToSize: maximumLabelSize)
     [QuestionCell::CELL_SPACING, expectedLabelSize1.height, QuestionCell::CELL_SPACING, expectedLabelSize2.height, QuestionCell::CELL_SPACING/2].reduce(:+)
   end
 
@@ -108,7 +104,7 @@ class QuestionsController < BaseController
       QuestionCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: QuestionCell.reuseIdentifier)
     end
 
-    cell.question = @questions[indexPath.row]
+    cell.question = questionAtIndexPath(indexPath)
     cell.render
     cell
   end
@@ -118,14 +114,12 @@ class QuestionsController < BaseController
     navigationController.pushViewController(questionController, animated: true)
   end
 
-  private
-
   def questionAtIndexPath(indexPath)
     @questions[indexPath.row]
   end
 
   def displayQuestions(notification)
-    @questions = notification.object
+    @questions += notification.object
     @table.reloadData
     hideProgress
   end
@@ -146,21 +140,19 @@ class TopQuestionsController < QuestionsController
   def viewDidLoad
     super
     navigationItem.title = 'Top Questions'
+    Question.top
+    showProgress
+  end
+
+  def registerEvents
+    'TopQuestionsFetched'.add_observer(self, 'displayQuestions:')
   end
 
 end
 
 class QuestionsSearchController < QuestionsController
 
-  include UIViewControllerExtension
-
   private
-
-  def viewDidLoad
-    super
-    performHousekeepingTasks
-    registerEvents
-  end
 
   def performHousekeepingTasks
     navigationItem.title = 'Search'
@@ -205,16 +197,12 @@ class TagQuestionsController < QuestionsController
   def viewDidLoad
     super
     navigationItem.title = @tag.name
-    registerEvents
     @tag.fetch_questions
+    showProgress
   end
 
   def registerEvents
     'QuestionsByTagFetched'.add_observer(self, 'displayQuestions:')
-  end
-
-  def numberOfRowsInSection
-    @questions.count
   end
 
 end

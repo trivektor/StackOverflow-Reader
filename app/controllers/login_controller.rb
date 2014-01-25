@@ -45,7 +45,7 @@ class LoginController < UIViewController
       return unless access_token
 
       SSKeychain.setPassword(access_token, forService: 'access_token', account: APP_KEYCHAIN_ACCOUNT)
-      User.fetchMe(access_token)
+      User.fetchMe
       @authenticated = true
     end
 

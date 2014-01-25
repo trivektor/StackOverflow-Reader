@@ -50,20 +50,26 @@ class User
     end
   end
 
-  def self.fetchMe(access_token, options={})
+  def self.fetchMe(options={})
+    return unless AppHelper.access_token
     buildClient
-    @@client.get('me', site: STACK_OVERFLOW_SITE_PARAM, access_token: AppHelper.access_token, key: STACK_EXCHANGE_KEY) do |result|
-      data = result.object[:items].to_a.first
-      CurrentUserManager.initWithUser(User.new(data))
-      'MyselfFetched'.post_notification(CurrentUserManager.sharedInstance)
+    @@client.get('me', AppHelper.prepParams) do |result|
+      if result.success?
+        return unless result.object[:items].is_a?(Array) && result.object[:items].length > 0
+        data = result.object[:items].to_a.first
+        CurrentUserManager.initWithUser(User.new(data))
+        'MyselfFetched'.post_notification(CurrentUserManager.sharedInstance)
+      else
+        puts result.error.localizedDescription
+      end
     end
   end
 
   def self.fetchUsers(options={})
     buildClient
-    @@client.get('users', {site: STACK_OVERFLOW_SITE_PARAM, access_token: AppHelper.access_token, key: STACK_EXCHANGE_KEY}.merge(options)) do |result|
+    @@client.get('users', AppHelper.prepParams(options)) do |result|
       if result.success?
-        'UsersFetched'.post_notification(result.object[:items].map { |u| User.new(u) })
+        'UsersFetched'.post_notification(result.object[:items].to_a.map { |u| User.new(u) })
       else
         puts result.error.localizedDescription
       end

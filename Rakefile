@@ -47,6 +47,7 @@ Motion::Project::App.setup do |app|
     pod 'RESideMenu'
     pod 'GRMustache'
     pod 'NSData+Base64'
+    pod 'DDURLParser'
     pod 'MRProgress'
   end
 

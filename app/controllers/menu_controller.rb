@@ -15,12 +15,12 @@ class MenuCell < UITableViewCell
     @iconLabel = UILabel.alloc.initWithFrame([[15, 9], [25, 25]])
     @iconLabel.textColor = whiteColor
     @iconLabel.backgroundColor = clearColor
-    @iconLabel.font = FontAwesome.fontWithSize(16)
+    @iconLabel.font = FontAwesome.fontWithSize(17)
 
     @textLabel = UILabel.alloc.initWithFrame([[45, 11], [243, 21]])
     @textLabel.textColor = whiteColor
     @textLabel.backgroundColor = clearColor
-    @textLabel.font = 'HelveticaNeue-Light'.uifont(13)
+    @textLabel.font = 'HelveticaNeue-Light'.uifont(17)
 
     contentView.addSubview(@iconLabel)
     contentView.addSubview(@textLabel)
@@ -33,7 +33,7 @@ class MenuCell < UITableViewCell
   def renderForRowAtIndexPath(indexPath)
     self.backgroundColor = UIColor.clearColor
     case indexPath.row
-    when 0
+    when -1
       if CurrentUserManager.sharedInstance
         @image = UIImageView.alloc.initWithFrame([[15, 9], [26, 26]])
 
@@ -49,19 +49,19 @@ class MenuCell < UITableViewCell
         @textLabel.text = 'Login'
         @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-lock')
       end
-    when 1
+    when 0
       @textLabel.text = 'Questions'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-question')
-    when 2
+    when 1
       @textLabel.text = 'Tags'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-tags')
-    when 3
+    when 2
       @textLabel.text = 'Users'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-user')
-    when 4
+    when 3
       @textLabel.text = 'Badges'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-flag')
-    when 5
+    when 4
       @textLabel.text = 'Unanswered'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-bolt')
     end
@@ -104,7 +104,7 @@ class MenuController < UIViewController
   end
 
   def tableView(tableView, numberOfRowsInSection: section)
-    6
+    5
   end
 
   def tableView(tableView, cellForRowAtIndexPath: indexPath)
@@ -118,17 +118,17 @@ class MenuController < UIViewController
 
   def tableView(tableView, didSelectRowAtIndexPath: indexPath)
     case indexPath.row
-    when 0
+    when -1
       return if AppHelper.access_token
       sideMenuViewController.hideMenuViewController
       controller = UINavigationController.alloc.initWithRootViewController(LoginController.new)
       controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical
       presentModalViewController(controller, animated: true)
-    when 1
+    when 0
       navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(TopQuestionsController.new))
-    when 2
+    when 1
       navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(TagsController.new))
-    when 3
+    when 2
       navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(UsersController.new))
     end
   end

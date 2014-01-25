@@ -2,10 +2,10 @@ class UserCell < UITableViewCell
 
   attr_accessor :user, :avatar, :nameLabel, :locationLabel, :reputationLabel
 
-  CELL_SPACING = 8
+  CELL_SPACING = 12
   LEFT_PADDING = 64
   TEXT_WIDTH = 270
-  HEIGHT = 60
+  HEIGHT = 80
 
   def initWithStyle(style, reuseIdentifier: identifier)
     super
@@ -17,17 +17,17 @@ class UserCell < UITableViewCell
     @avatar = UIImageView.alloc.initWithFrame([[10, 8], [44, 44]])
     contentView.addSubview(@avatar)
 
-    @nameLabel = UILabel.alloc.initWithFrame([[LEFT_PADDING, 8], [TEXT_WIDTH, 14]])
-    @nameLabel.font = 'HelveticaNeue'.uifont(14)
+    @nameLabel = UILabel.alloc.initWithFrame([[LEFT_PADDING, 8], [TEXT_WIDTH, 19]])
+    @nameLabel.font = 'HelveticaNeue'.uifont(17)
     contentView.addSubview(@nameLabel)
 
-    @locationLabel = UILabel.alloc.initWithFrame([[LEFT_PADDING, 26], [TEXT_WIDTH, 13]])
-    @locationLabel.font = 'HelveticaNeue-Light'.uifont(10)
+    @locationLabel = UILabel.alloc.initWithFrame([[LEFT_PADDING, 38], [TEXT_WIDTH, 17]])
+    @locationLabel.font = 'HelveticaNeue-Light'.uifont(15)
     @locationLabel.textColor = '#999'.uicolor
     contentView.addSubview(@locationLabel)
 
-    @reputationLabel = UILabel.alloc.initWithFrame([[LEFT_PADDING, 41], [TEXT_WIDTH, 12]])
-    @reputationLabel.font = 'HelveticaNeue-Light'.uifont(9)
+    @reputationLabel = UILabel.alloc.initWithFrame([[LEFT_PADDING, 57], [TEXT_WIDTH, 17]])
+    @reputationLabel.font = 'HelveticaNeue-Light'.uifont(15)
     contentView.addSubview(@reputationLabel)
   end
 

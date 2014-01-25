@@ -12,11 +12,11 @@ class AppDelegate
     UINavigationBar.appearance.setTitleTextAttributes(
       NSForegroundColorAttributeName => whiteColor,
       UITextAttributeTextColor => whiteColor,
-      UITextAttributeFont => 'HelveticaNeue-Light'.uifont(16),
+      UITextAttributeFont => 'HelveticaNeue-Light'.uifont(20),
       UITextAttributeTextShadowColor => UIColor.clearColor
     )
 
-    UINavigationBar.appearance.setBarTintColor('#f39c12'.uicolor)
+    UINavigationBar.appearance.setBarTintColor('#0CB0F7'.uicolor)
     UINavigationBar.appearance.setTintColor(whiteColor)
 
     UIBarButtonItem.appearance.setTintColor(whiteColor)
@@ -37,7 +37,10 @@ class AppDelegate
     sideMenuController.delegate = UIApplication.sharedApplication.delegate
 
     self.window.rootViewController = sideMenuController
-    User.fetchMe(AppHelper.access_token) if AppHelper.access_token
+    # if AppHelper.access_token
+    #   "access_token when app start is #{AppHelper.access_token}"
+    #   User.fetchMe(AppHelper.access_token)
+    # end
     true
   end
 end
