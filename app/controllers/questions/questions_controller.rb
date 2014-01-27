@@ -14,6 +14,8 @@ class QuestionCell < UITableViewCell
 
   CELL_SPACING = 12
   MAX_WIDTH = 276
+  TITLE_FONT = 'HelveticaNeue-Medium'.uifont(16)
+  SUB_TITLE_FONT = 'HelveticaNeue-Light'.uifont(15)
 
   def initWithStyle(style, reuseIdentifier: identifier)
     super
@@ -24,23 +26,23 @@ class QuestionCell < UITableViewCell
     contentView.subviews.each { |v| v.removeFromSuperview }
     maximumLabelSize = CGSizeMake(MAX_WIDTH, CGFLOAT_MAX)
 
-    titleLabelHeight = question.title.sizeWithFont('HelveticaNeue'.uifont(17), constrainedToSize: maximumLabelSize).height
+    titleLabelHeight = question.title.sizeWithFont(TITLE_FONT, constrainedToSize: maximumLabelSize).height
     @titleLabel = UILabel.alloc.initWithFrame([[11, CELL_SPACING], [MAX_WIDTH, titleLabelHeight]])
     @titleLabel.lineBreakMode = NSLineBreakByWordWrapping
     @titleLabel.text = AppHelper.decodeHTMLEntities(@question.title)
     @titleLabel.numberOfLines = 0
-    @titleLabel.font = 'HelveticaNeue-Light'.uifont(17)
+    @titleLabel.font = TITLE_FONT
     @titleLabel.sizeToFit
 
     self.contentView.addSubview(@titleLabel)
 
     tags = question.tags.join(', ')
-    subTitleLabelHeight = tags.sizeWithFont('HelveticaNeue-Light'.uifont(15), constrainedToSize: maximumLabelSize).height
+    subTitleLabelHeight = tags.sizeWithFont(SUB_TITLE_FONT, constrainedToSize: maximumLabelSize).height
     @subTitleLabel = UILabel.alloc.initWithFrame([[11, @titleLabel.frame.size.height + CELL_SPACING*3/2], [MAX_WIDTH, subTitleLabelHeight + CELL_SPACING]])
     @subTitleLabel.lineBreakMode = NSLineBreakByWordWrapping
     @subTitleLabel.text = AppHelper.decodeHTMLEntities(tags)
     @subTitleLabel.numberOfLines = 0
-    @subTitleLabel.font = 'HelveticaNeue-Light'.uifont(15)
+    @subTitleLabel.font = SUB_TITLE_FONT
     @subTitleLabel.textColor = '#999'.uicolor
     @subTitleLabel.sizeToFit
 
@@ -94,8 +96,8 @@ class QuestionsController < BaseController
     # Calculate title label height
     question = questionAtIndexPath(indexPath)
     maximumLabelSize = CGSizeMake(QuestionCell::MAX_WIDTH, CGFLOAT_MAX)
-    expectedLabelSize1 = AppHelper.decodeHTMLEntities(question.title).sizeWithFont('HelveticaNeue'.uifont(17), constrainedToSize: maximumLabelSize)
-    expectedLabelSize2 = AppHelper.decodeHTMLEntities(question.tags.join(', ')).sizeWithFont('HelveticaNeue-Light'.uifont(15), constrainedToSize: maximumLabelSize)
+    expectedLabelSize1 = AppHelper.decodeHTMLEntities(question.title).sizeWithFont(QuestionCell::TITLE_FONT, constrainedToSize: maximumLabelSize)
+    expectedLabelSize2 = AppHelper.decodeHTMLEntities(question.tags.join(', ')).sizeWithFont(QuestionCell::SUB_TITLE_FONT, constrainedToSize: maximumLabelSize)
     [QuestionCell::CELL_SPACING, expectedLabelSize1.height, QuestionCell::CELL_SPACING, expectedLabelSize2.height, QuestionCell::CELL_SPACING/2].reduce(:+)
   end
 

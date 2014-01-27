@@ -38,7 +38,7 @@ class QuestionController < BaseController
   end
 
   def performHousekeepingTasks
-    navigationItem.title = AppHelper.decodeHTMLEntities(@question.title)
+    navigationItem.title = 'Question'
     @webView = createWebView
     view.addSubview(@webView)
     navigationItem.rightBarButtonItem = createFontAwesomeButton(icon: 'cog', color: UIColor.whiteColor, touchHandler: 'displayOptions')

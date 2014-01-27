@@ -16,7 +16,7 @@ class AppDelegate
       UITextAttributeTextShadowColor => UIColor.clearColor
     )
 
-    UINavigationBar.appearance.setBarTintColor('#0CB0F7'.uicolor)
+    UINavigationBar.appearance.setBarTintColor('#ffcd02'.uicolor)
     UINavigationBar.appearance.setTintColor(whiteColor)
 
     UIBarButtonItem.appearance.setTintColor(whiteColor)
