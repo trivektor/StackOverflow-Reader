@@ -37,7 +37,7 @@ class UserCell < UITableViewCell
   def render
     @avatar.setImageWithURL(@user.avatar_nsurl, placeholderImage: nil)
     @nameLabel.text = @user.display_name
-    @locationLabel.text = @user.location
+    @locationLabel.text = AppHelper.decodeHTMLEntities(@user.location || 'Somewhere on Earth')
     @reputationLabel.text = @user.reputation.to_i.string_with_style
     defineAccessoryType
   end

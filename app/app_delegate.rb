@@ -12,7 +12,7 @@ class AppDelegate
     UINavigationBar.appearance.setTitleTextAttributes(
       NSForegroundColorAttributeName => whiteColor,
       UITextAttributeTextColor => whiteColor,
-      UITextAttributeFont => 'HelveticaNeue-Light'.uifont(20),
+      UITextAttributeFont => 'HelveticaNeue-Medium'.uifont(20),
       UITextAttributeTextShadowColor => UIColor.clearColor
     )
 
