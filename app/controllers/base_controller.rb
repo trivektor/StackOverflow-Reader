@@ -1,4 +1,4 @@
-class BaseController < UIViewController
+class BaseController < AMScrollingNavbarViewController
 
   include UIViewControllerExtension
 
@@ -9,8 +9,20 @@ class BaseController < UIViewController
     end
   end
 
+  def initAMScrollingNavbar
+    if @table
+      navigationController.navigationBar.translucent = false
+      followScrollView(@table)
+    end
+  end
+
   def showMenu
     sideMenuViewController.presentMenuViewController
+  end
+
+  def scrollViewShouldScrollToTop(scrollView)
+    showNavbar
+    true
   end
 
 end

@@ -49,6 +49,7 @@ Motion::Project::App.setup do |app|
     pod 'NSData+Base64'
     pod 'DDURLParser'
     pod 'MRProgress'
+    pod 'AMScrollingNavbar'
   end
 
 end

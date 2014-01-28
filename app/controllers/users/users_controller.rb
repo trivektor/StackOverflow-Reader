@@ -71,6 +71,7 @@ class UsersController < BaseController
     navigationItem.title = 'Top Users'
     @table = createTable(cell: UserCell)
     view.addSubview(@table)
+    initAMScrollingNavbar
   end
 
   def registerEvents

@@ -20,6 +20,7 @@ class TagsController < BaseController
     navigationItem.title = 'Tags'
     @table = createTable(cell: QuestionCell)
     view.addSubview(@table)
+    initAMScrollingNavbar
   end
 
   def registerEvents

@@ -75,6 +75,7 @@ class QuestionsController < BaseController
     @table = createTable(cell: QuestionCell)
     navigationItem.rightBarButtonItem = createFontAwesomeButton(icon: 'search', color: UIColor.whiteColor, touchHandler: 'search')
     view.addSubview(@table)
+    initAMScrollingNavbar
   end
 
   def registerEvents
