@@ -60,8 +60,7 @@ class Question
   end
 
   def self.search(options={})
-    params = prepParams
-    SEARCH_PARAMS.each { |p| params.merge!({p => options[p]}) if options[p] }
+    SEARCH_PARAMS.each { |p| AppHelper.prepParams.merge!({p => options[p]}) if options[p] }
 
     AFMotion::Client.shared.get('search', params) do |result|
       if result.success?
