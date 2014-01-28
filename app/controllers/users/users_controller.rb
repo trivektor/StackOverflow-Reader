@@ -96,9 +96,20 @@ class UsersController < BaseController
       UserCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: identifier)
     end
 
-    cell.user = @users[indexPath.row]
+    cell.user = tableView(tableView, userAtIndexPath: indexPath)
     cell.render
     cell
+  end
+
+  def tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    navigationController.pushViewController(
+      UserController.alloc.initWithUser(tableView(tableView, userAtIndexPath: indexPath)),
+      animated: true
+    )
+  end
+
+  def tableView(tableView, userAtIndexPath: indexPath)
+    @users[indexPath.row]
   end
 
   def displayUsers(notification)

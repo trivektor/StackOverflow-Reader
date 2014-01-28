@@ -29,12 +29,28 @@ class User
     @data[:profile_image]
   end
 
+  def age
+    @data[:age]
+  end
+
   def reputation
     @data[:reputation].to_i
   end
 
   def formatted_reputation
     reputation < 1000 ? reputation : reputation.string_with_style
+  end
+
+  def accept_rate
+    @data[:accept_rate]
+  end
+
+  def website_url
+    @data[:website_url]
+  end
+
+  def member_for
+
   end
 
   def to_json

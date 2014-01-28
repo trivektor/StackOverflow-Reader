@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' type='text/css' href='http://getbootstrap.com/dist/css/bootstrap.min.css'>
+    <style>
+      body {
+        font-weight: 200;
+        font-size: 15px;
+        line-height: 1.4em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: 300;
+      }
+
+      main {
+        padding: 10px;
+        display: block;
+      }
+
+      section {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      section:last-of-type {
+        border-bottom: 0;
+      }
+
+      section .lead {
+        font-size: 18px;
+        font-weight: 300;
+        margin-top: 0;
+      }
+
+      section > ul > li {
+        padding: 10px 0;
+        border-top: 1px solid #eee;
+      }
+
+      .score {
+        font-size: 24px;
+        float: left;
+        width: 40px;
+        text-align: center
+      }
+
+      .tags {
+        display: block;
+        padding: 10px 0;
+        border-top: 1px solid #eee
+      }
+
+      .answer .details,
+      .question-text {
+        padding-left: 50px
+      }
+
+      .user-module {
+        display: inline-block;
+        padding: 4px;
+        overflow: hidden;
+        background: #eee;
+        margin: 10px 0;
+        clear: both;
+      }
+
+      .user-module .name {
+        margin-left: 28px;
+        display: block;
+      }
+
+      .user-module .reputation {
+        font-weight: bold;
+      }
+
+      .user-avatar {
+        float: left;
+        width: 24px;
+      }
+
+      .block-element {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class='media'>
+        <div class='pull-left'>
+          <img src='{{ user.profile_image }}' alt='{{ user.display_name }}' class='img-circle' width='64' />
+        </div>
+        <div class='media-body'>
+          <h2 class='media-heading'>{{ user.display_name }}</h2>
+          <ul class='list-unstyled'>
+            <li>
+              <b>Reputation:</b>
+              {{ user.reputation }}
+            </li>
+            <li>
+              <b>Website:</b>
+              {{ user.website }}
+            </li>
+            <li>
+              <b>Age:</b>
+              {{ user.age }}
+            </li>
+          </ul>
+        </div>
+      </header>
+      <h3>Questions</h3>
+      <div class='well well-sm'>
+      </div>
+      <h3>Reputation</h3>
+      <div class='well well-sm'>
+      </div>
+      <h3>Tags</h3>
+      <div class='well well-sm'>
+      </div>
+      <h3>Badges</h3>
+      <div class='well well-sm'>
+      </div>
+    </main>
+  </body>
+</html>
