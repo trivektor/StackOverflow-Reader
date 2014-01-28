@@ -1,6 +1,11 @@
 class MenuCell < UITableViewCell
 
   HEIGHT = 54
+  SELECTED_BACKGROUND_COLOR = '#ff9900'.uicolor;
+  TEXT_COLOR = '#fff'.uicolor
+  TEXT_FONT = 'HelveticaNeue-Light'.uifont(16)
+  ICON_FONT = FontAwesome.fontWithSize(17)
+  SEPARATOR_COLOR = '#fff'.uicolor(0.4)
 
   attr_accessor :iconLabel, :textLabel, :image
 
@@ -11,23 +16,22 @@ class MenuCell < UITableViewCell
   end
 
   def createLabels
-    whiteColor = '#fff'.uicolor
     clearColor = UIColor.clearColor
 
     @iconLabel = UILabel.alloc.initWithFrame([[15, 14], [25, 25]])
-    @iconLabel.textColor = whiteColor
+    @iconLabel.textColor = TEXT_COLOR
     @iconLabel.backgroundColor = clearColor
-    @iconLabel.font = FontAwesome.fontWithSize(17)
+    @iconLabel.font = ICON_FONT
 
     @textLabel = UILabel.alloc.initWithFrame([[45, 16], [243, 21]])
-    @textLabel.textColor = whiteColor
+    @textLabel.textColor = TEXT_COLOR
     @textLabel.backgroundColor = clearColor
-    @textLabel.font = 'HelveticaNeue-Light'.uifont(16)
+    @textLabel.font = TEXT_FONT
 
     contentView.addSubview(@iconLabel)
     contentView.addSubview(@textLabel)
     selectedBackgroundView = UIView.alloc.initWithFrame(self.frame)
-    selectedBackgroundView.backgroundColor = 'red'.uicolor
+    selectedBackgroundView.backgroundColor = SELECTED_BACKGROUND_COLOR
     self.selectedBackgroundView = selectedBackgroundView
     self.selectionStyle = UITableViewCellSelectionStyleNone
   end
@@ -70,7 +74,7 @@ class MenuCell < UITableViewCell
 
     if indexPath.row < 4
       bottomBorder = UIView.alloc.initWithFrame([[0, 53], [180, 0.5]])
-      bottomBorder.backgroundColor = '#fff'.uicolor(0.1)
+      bottomBorder.backgroundColor = SEPARATOR_COLOR
       contentView.addSubview(bottomBorder)
     end
   end
@@ -80,6 +84,8 @@ end
 class MenuController < UIViewController
 
   include UIViewControllerExtension
+
+  BACKGROUND_COLOR = '#000'.uicolor
 
   private
 
@@ -92,7 +98,7 @@ class MenuController < UIViewController
     frame = self.view.frame
     clearColor = UIColor.clearColor
     @table = createTable(cell: MenuCell, frame: CGRectMake(0, 80, frame.size.width, frame.size.height), background_color: clearColor, separator_color: clearColor)
-    view.backgroundColor = '#222'.uicolor
+    view.backgroundColor = BACKGROUND_COLOR
     view.addSubview(@table)
   end
 
