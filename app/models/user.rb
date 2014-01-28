@@ -2,11 +2,17 @@ class User
 
   include AFNetworkingClient
 
-  attr_accessor :data
+  attr_accessor :data, :questions, :tags
 
   def initialize(data={})
     @data = data
+    @questions = []
+    @tags = []
     initAFNetworkingClient
+  end
+
+  def account_id
+    @data[:account_id]
   end
 
   def avatar
@@ -57,6 +63,28 @@ class User
     @data.merge(
       formatted_reputation: formatted_reputation
     )
+  end
+
+  def fetchQuestions(options={})
+    AFMotion::Client.shared.get("/users/#{account_id}/questions", AppHelper.prepParams) do |result|
+      if result.success?
+        @questions += result.object[:items].to_a.map { |q| Question.new(q) }
+        'ProfileQuestionsFetched'.post_notification
+      else
+        puts result.error.localizedDescription
+      end
+    end
+  end
+
+  def fetchTags(options={})
+    AFMotion::Client.shared.get("/users/#{account_id}/tags", AppHelper.prepParams) do |result|
+      if result.success?
+        @tags += result.object[:items].to_a.map { |t| Tag.new(t) }
+        'ProfileTagsFetched'.post_notification
+      else
+        puts result.error.localizedDescription
+      end
+    end
   end
 
   def self.buildClient

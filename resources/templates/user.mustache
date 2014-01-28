@@ -88,38 +88,41 @@
   <body>
     <main>
       <header class='media'>
-        <div class='pull-left'>
+        <div class='pull-left' style='margin-right: 15px'>
           <img src='{{ user.profile_image }}' alt='{{ user.display_name }}' class='img-circle' width='64' />
         </div>
         <div class='media-body'>
-          <h2 class='media-heading'>{{ user.display_name }}</h2>
+          <h2 class='media-heading'>{{user.display_name}}</h2>
           <ul class='list-unstyled'>
             <li>
               <b>Reputation:</b>
-              {{ user.reputation }}
+              {{user.formatted_reputation}}
             </li>
             <li>
               <b>Website:</b>
-              {{ user.website }}
+              {{user.website}}
             </li>
             <li>
               <b>Age:</b>
-              {{ user.age }}
+              {{user.age}}
             </li>
           </ul>
         </div>
       </header>
       <h3>Questions</h3>
-      <div class='well well-sm'>
-      </div>
-      <h3>Reputation</h3>
-      <div class='well well-sm'>
-      </div>
+      <ul class='list-group'>
+        {{#questions}}
+          <li class='list-group-item'>
+            <span class='label label-default'>{{score}}</span>
+            {{title}}
+          </li>
+        {{/questions}}
+      </ul>
       <h3>Tags</h3>
       <div class='well well-sm'>
-      </div>
-      <h3>Badges</h3>
-      <div class='well well-sm'>
+        {{#tags}}
+          <span class='label label-warning'>{{name}} ({{formatted_count}})</span>
+        {{/tags}}
       </div>
     </main>
   </body>

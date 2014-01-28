@@ -23,11 +23,7 @@ class AppHelper
     end
 
     def prepParams(params={})
-      params = {site: STACK_OVERFLOW_SITE_PARAM}
-      if access_token
-        params.merge!(access_token: access_token, key: STACK_EXCHANGE_KEY)
-      end
-      params
+      params.merge(site: STACK_OVERFLOW_SITE_PARAM)
     end
 
   end

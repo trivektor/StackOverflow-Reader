@@ -11,7 +11,9 @@ class UserController < BaseController
 
   def viewDidLoad
     performHousekeepingTasks
-    displayProfile
+    registerEvents
+    @user.fetchQuestions
+    showProgress
   end
 
   def performHousekeepingTasks
@@ -20,13 +22,26 @@ class UserController < BaseController
     view.addSubview(@webView)
   end
 
+  def registerEvents
+    'ProfileQuestionsFetched'.add_observer(self, 'fetchTags')
+    'ProfileTagsFetched'.add_observer(self, 'displayProfile')
+  end
+
+  def fetchTags
+    @user.fetchTags
+  end
+
   def displayProfile
     file = NSBundle.mainBundle.pathForResource('templates/user', ofType: 'mustache')
     html = NSString.stringWithContentsOfFile(file, encoding: NSUTF8StringEncoding, error: nil)
+
     renderedHtml = GRMustacheTemplate.renderObject(NSDictionary.dictionaryWithDictionary({
-      user: user.to_json
+      user: @user.to_json,
+      questions: @user.questions.map { |q| q.to_json },
+      tags: @user.tags.map { |t| t.to_json }
     }), fromString: html, error: nil)
     @webView.loadHTMLString(AppHelper.decodeHTMLEntities(renderedHtml), baseURL: NSURL.fileURLWithPath(NSBundle.mainBundle.bundlePath))
+    hideProgress
   end
 
 end
