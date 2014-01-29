@@ -2,12 +2,13 @@ class User
 
   include AFNetworkingClient
 
-  attr_accessor :data, :questions, :tags
+  attr_accessor :data, :questions, :tags, :badges
 
   def initialize(data={})
     @data = data
     @questions = []
     @tags = []
+    @badges = []
     initAFNetworkingClient
   end
 
@@ -81,6 +82,17 @@ class User
       if result.success?
         @tags += result.object[:items].to_a.map { |t| Tag.new(t) }
         'ProfileTagsFetched'.post_notification
+      else
+        puts result.error.localizedDescription
+      end
+    end
+  end
+
+  def fetchBadges(options={})
+    AFMotion::Client.shared.get("/users/#{account_id}/badges", AppHelper.prepParams) do |result|
+      if result.success?
+        @badges += result.object[:items].to_a.map { |b| Badge.new(b) }
+        'ProfileBadgesFetched'.post_notification
       else
         puts result.error.localizedDescription
       end

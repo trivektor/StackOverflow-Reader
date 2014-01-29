@@ -24,11 +24,16 @@ class UserController < BaseController
 
   def registerEvents
     'ProfileQuestionsFetched'.add_observer(self, 'fetchTags')
-    'ProfileTagsFetched'.add_observer(self, 'displayProfile')
+    'ProfileTagsFetched'.add_observer(self, 'fetchBadges')
+    'ProfileBadgesFetched'.add_observer(self, 'displayProfile')
   end
 
   def fetchTags
     @user.fetchTags
+  end
+
+  def fetchBadges
+    @user.fetchBadges
   end
 
   def displayProfile
@@ -38,7 +43,8 @@ class UserController < BaseController
     renderedHtml = GRMustacheTemplate.renderObject(NSDictionary.dictionaryWithDictionary({
       user: @user.to_json,
       questions: @user.questions.map { |q| q.to_json },
-      tags: @user.tags.map { |t| t.to_json }
+      tags: @user.tags.map { |t| t.to_json },
+      badges: @user.badges.map { |b| b.to_json }
     }), fromString: html, error: nil)
     @webView.loadHTMLString(AppHelper.decodeHTMLEntities(renderedHtml), baseURL: NSURL.fileURLWithPath(NSBundle.mainBundle.bundlePath))
     hideProgress
