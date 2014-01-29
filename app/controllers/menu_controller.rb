@@ -85,7 +85,7 @@ class MenuController < UIViewController
 
   include UIViewControllerExtension
 
-  BACKGROUND_COLOR = '#000'.uicolor
+  BACKGROUND_COLOR = '#222'.uicolor
 
   private
 

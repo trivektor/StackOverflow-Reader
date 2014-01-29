@@ -1,0 +1,90 @@
+body {
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.4em;
+  -webkit-overflow-scrolling: touch;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+}
+
+main {
+  padding: 10px;
+  display: block;
+}
+
+section {
+  margin-bottom: 20px;
+}
+
+section:last-of-type {
+  border-bottom: 0;
+}
+
+section .lead {
+  font-size: 18px;
+  font-weight: inherit;
+  margin-top: 0;
+}
+
+.block-element {
+  display: block;
+}
+
+.user-avatar {
+  float: left;
+  width: 24px;
+}
+
+.well {
+  box-shadow: none;
+  border: 1px solid #ddd;
+  border-radius: 0;
+  background: none;
+}
+
+.label {
+  font-size: inherit;
+  font-weight: inherit;
+  display: inline-block;
+  margin: 2px;
+  text-shadow: 0 0 0;
+}
+
+.label.answerer {
+  text-align: left;
+}
+
+.label-warning {
+  background: #ffcd02;
+}
+
+.label-minimal {
+  background: none;
+  color: inherit;
+  border: 1px solid #ddd;
+}
+
+.region-responsive {
+  overflow-x: auto;
+}
+
+.vertically-separated > .list-group-item {
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#question-title {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}

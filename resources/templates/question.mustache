@@ -2,84 +2,11 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' type='text/css' href='http://getbootstrap.com/dist/css/bootstrap.min.css'>
-    <style>
-      body {
-        font-weight: 200;
-        font-size: 14px;
-        line-height: 1.4em;
-      }
-
-      main {
-        padding: 10px;
-        display: block;
-      }
-
-      section {
-        margin-bottom: 20px;
-        border-bottom: 1px solid #eee;
-      }
-
-      section:last-of-type {
-        border-bottom: 0;
-      }
-
-      section .lead {
-        font-size: 18px;
-        font-weight: 300;
-        margin-top: 0;
-      }
-
-      section > ul > li {
-        padding: 10px 0;
-        border-top: 1px solid #eee;
-      }
-
-      .score {
-        font-size: 24px;
-        float: left;
-        width: 40px;
-        text-align: center
-      }
-
-      .tags {
-        display: block;
-        padding: 10px 0;
-        border-top: 1px solid #eee
-      }
-
-      .answer .details,
-      .question-text {
-        padding-left: 50px
-      }
-
-      .user-module {
-        display: inline-block;
-        padding: 4px;
-        overflow: hidden;
-        background: #eee;
-        margin: 10px 0;
-        clear: both;
-      }
-
-      .user-module .name {
-        margin-left: 28px;
-        display: block;
-      }
-
-      .user-module .reputation {
-        font-weight: bold;
-      }
-
-      .user-avatar {
-        float: left;
-        width: 24px;
-      }
-
-      .block-element {
-        display: block;
-      }
-    </style>
+    <link rel='stylesheet' type='text/css' href='bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='bootflat.css'>
+    <link rel='stylesheet' type='text/css' href='bootflat-square.css'>
+    <link rel='stylesheet' type='text/css' href='bootflat.extensions.css'>
+    <link rel='stylesheet' type='text/css' href='customizations.css'>
     <script src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.0/moment.min.js'></script>
     <script>
@@ -95,46 +22,58 @@
   <body>
     <main>
       <section>
-        <h1 class='lead'>{{question.title}}</h1>
-        <div class='clearfix'>
-          <span class='score'>{{question.score}}</span>
-          <div class='question-text'>
-            <div class='body'>{{question.body}}</div>
+        <h1 id='question-title'>{{question.title}}</h1>
+        <div class='media'>
+          <div class='pull-left'>
+            <figure class='label label-warning label-square'>{{question.score}}</figure>
+          </div>
+          <div class='media-body'>
+            <div class='body'>
+              <div class='region-responsive'>{{question.body}}</div>
+            </div>
             <time class='block-element text-muted'>
               <small>asked <span class='time' data-timestamp='{{question.creation_date}}'></span></small>
             </time>
-            <div class='user-module'>
-              <img class='user-avatar' src='{{question.owner.profile_image}}' alt='question.owner.display_name' />
-              <span class='name'>
-                <span>{{question.owner.display_name}}</span>
-                <figure class='reputation'>{{question.owner.formatted_reputation}}</figure>
-              </span>
+            <div class='media block-element label label-minimal label-square answerer'>
+              <div class='pull-left'>
+                <img class='user-avatar' src='{{question.owner.profile_image}}' alt='{{question.owner.display_name}}' />
+              </div>
+              <div class='media-body'>
+                <b>{{question.owner.display_name}}</b>
+                <figure>{{question.owner.formatted_reputation}}</figure>
+              </div>
             </div>
           </div>
         </div>
       </section>
       <section>
         <h2 class='lead'>Answers: {{question.answer_count}}</h2>
-        <aside class='tags'>
-          {{#question.tags}}
-            <label class='label label-default'>{{.}}</label>
-          {{/question.tags}}
-        </aside>
-        <ul class='list-unstyled answers-list'>
+        {{#question.tags}}
+          <span class='label label-default label-square label-success'>{{.}}</span>
+        {{/question.tags}}
+      </section>
+      <section>
+        <ul class='list-group vertically-separated'>
           {{#answers}}
-            <li class='answer'>
-              <figure class='score'>{{score}}</figure>
-              <div class='details'>
-                <div class='body'>{{body}}</div>
-                <time class='block-element'>
-                  <small>answered <span class='time' data-timestamp='{{creation_date}}'></span></small>
-                </time>
-                <div class='user-module'>
-                  <img class='user-avatar' src='{{owner.profile_image}}' alt='{{owner.display_name}}' />
-                  <span class='name'>
-                    <span>{{owner.display_name}}</span>
-                    <figure class='reputation'>{{owner.formatted_reputation}}</figure>
-                  </span>
+            <li class='list-group-item'>
+              <div class='media'>
+                <div class='pull-left'>
+                  <figure class='label label-warning label-square label-success'>{{score}}</figure>
+                </div>
+                <div class='media-body'>
+                  <div class='region-responsive'>{{body}}</div>
+                  <time class='block-element'>
+                    <small>answered <span class='time' data-timestamp='{{creation_date}}'></span></small>
+                  </time>
+                  <div class='media block-element label label-minimal label-square answerer'>
+                    <div class='pull-left'>
+                      <img class='user-avatar' src='{{owner.profile_image}}' alt='{{owner.display_name}}' />
+                    </div>
+                    <div class='media-body'>
+                      <b>{{owner.display_name}}</b>
+                      <figure>{{owner.formatted_reputation}}</figure>
+                    </div>
+                  </div>
                 </div>
               </div>
             </li>
