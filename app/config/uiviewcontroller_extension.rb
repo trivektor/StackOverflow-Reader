@@ -44,6 +44,17 @@ module UIViewControllerExtension
     }, forState: UIControlStateNormal)
   end
 
+  def createOptionsMenu(items, options={})
+    optionsMenu = REMenu.alloc.initWithItems(items)
+    optionsMenu.font = options[:font] || 'HelveticaNeue-Thin'.uifont(16)
+    optionsMenu.borderWidth = 0
+    optionsMenu.backgroundColor = options[:background_color] || '#333'.uicolor
+    optionsMenu.textColor = options[:text_color] || '#fff'.uicolor
+    optionsMenu.separatorColor = options[:separator_color] || '#fff'.uicolor(0.2)
+    optionsMenu.separatorHeight = options[:separator_height] || 0.5
+    optionsMenu
+  end
+
   def loadTemplate(path, type='mustache')
     file = NSBundle.mainBundle.pathForResource(path, ofType: type)
     html = NSString.stringWithContentsOfFile(file, encoding: NSUTF8StringEncoding, error: nil)

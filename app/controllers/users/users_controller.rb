@@ -60,20 +60,19 @@ class UsersController < BaseController
 
   def viewDidLoad
     super
+    navigationItem.title = 'Top Users'
     performHousekeepingTasks
     registerEvents
     User.fetchUsers(sort: 'reputation', order: 'desc')
+    buildOptionsMenu
     showProgress
   end
 
   def performHousekeepingTasks
     super
-    navigationItem.title = 'Top Users'
     @table = createTable(cell: UserCell)
     view.addSubview(@table)
-    navigationItem.rightBarButtonItem = createFontAwesomeButton(icon: 'cog', color: '#fff'.uicolor, touchHandler: 'toggleOptionsMenu')
     initAMScrollingNavbar
-    createOptionsMenu
   end
 
   def orderUsers(sort, options={})
@@ -81,26 +80,26 @@ class UsersController < BaseController
     showProgress
   end
 
-  def createOptionsMenu
-    @reputationOrder = REMenuItem.alloc.initWithTitle('Reputation', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
+  def buildOptionsMenu
+    @reputationOrder = REMenuItem.alloc.initWithTitle('Sort by Reputation', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
       orderUsers('reputation')
     })
-    @creationOrder = REMenuItem.alloc.initWithTitle('Joined Date', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
+    @creationOrder = REMenuItem.alloc.initWithTitle('Sort by Joined Date', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
       orderUsers('creation')
     })
-    @nameOrder = REMenuItem.alloc.initWithTitle('Name', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
+    @nameOrder = REMenuItem.alloc.initWithTitle('Sort by Name', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
       orderUsers('name')
     })
-    @modifiedOrder = REMenuItem.alloc.initWithTitle('Latest Activities', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
+    @modifiedOrder = REMenuItem.alloc.initWithTitle('Sort by Latest Activities', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
       orderUsers('modified')
     })
-    @optionsMenu = REMenu.alloc.initWithItems([@reputationOrder, @creationOrder, @nameOrder, @modifiedOrder])
-    @optionsMenu.font = 'HelveticaNeue-Thin'.uifont(16)
-    @optionsMenu.borderWidth = 0
-    @optionsMenu.backgroundColor = '#333'.uicolor
-    @optionsMenu.textColor = '#fff'.uicolor
-    @optionsMenu.separatorColor = '#fff'.uicolor(0.2)
-    @optionsMenu.separatorHeight = 0.5
+    @userSearch = REMenuItem.alloc.initWithTitle('Search User', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
+      @optionsMenu.closeWithCompletion(-> {
+        navigationController.pushViewController(UsersSearchController.new, animated: true)
+      })
+    })
+    @optionsMenu = createOptionsMenu([@reputationOrder, @creationOrder, @nameOrder, @modifiedOrder, @userSearch])
+    navigationItem.rightBarButtonItem = createFontAwesomeButton(icon: 'cog', color: '#fff'.uicolor, touchHandler: 'toggleOptionsMenu')
   end
 
   def registerEvents
@@ -149,7 +148,19 @@ class UsersController < BaseController
 
   def toggleOptionsMenu
     return @optionsMenu.close if @optionsMenu.isOpen
-    @optionsMenu.showFromNavigationController(navigationController)
+    @optionsMenu.showInView(view)
+  end
+
+end
+
+class UsersSearchController < UsersController
+
+  def viewDidLoad
+    navigationItem.title = 'Search User'
+  end
+
+  def performHousekeepingTasks
+    super
   end
 
 end
