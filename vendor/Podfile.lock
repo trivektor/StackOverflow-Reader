@@ -35,6 +35,7 @@ PODS:
   - MWFeedParser/NSString+HTML (0.0.1)
   - MWFeedParser/NSString+XMLEntities (0.0.1)
   - NSData+Base64 (1.0.0)
+  - REMenu (1.8)
   - RESideMenu (3.4)
   - SSKeychain (1.2.1)
 
@@ -49,6 +50,7 @@ DEPENDENCIES:
   - MRProgress
   - MWFeedParser
   - NSData+Base64
+  - REMenu
   - RESideMenu
   - SSKeychain
 
@@ -63,6 +65,7 @@ SPEC CHECKSUMS:
   MRProgress: 4f086e91313001ad4a622f1ea0d19bb8aa958f6a
   MWFeedParser: 2ca0852fac352f8333d5f46fdd4b583b921e0c4e
   NSData+Base64: 4819562faee4544e3cf5703f2139820b09732b28
+  REMenu: 40bb965c968b298c3f36d36067a15dd3f2c52473
   RESideMenu: d8d6330052e0348718826045b912a1c71748357d
   SSKeychain: d18926838c2e7cd342e2a49e9f869858e49f035a
 

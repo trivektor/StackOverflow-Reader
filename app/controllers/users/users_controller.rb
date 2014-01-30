@@ -71,7 +71,30 @@ class UsersController < BaseController
     navigationItem.title = 'Top Users'
     @table = createTable(cell: UserCell)
     view.addSubview(@table)
+    navigationItem.rightBarButtonItem = createFontAwesomeButton(icon: 'cog', color: '#fff'.uicolor, touchHandler: 'toggleOptionsMenu')
     initAMScrollingNavbar
+    createOptionsMenu
+  end
+
+  def orderUsers(sort, options={})
+    User.fetchUsers(sort: sort, order: options[:order] || 'desc')
+    showProgress
+  end
+
+  def createOptionsMenu
+    @reputationOrder = REMenuItem.alloc.initWithTitle('Reputation', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
+      orderUsers('reputation')
+    })
+    @creationOrder = REMenuItem.alloc.initWithTitle('Joined Date', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
+      orderUsers('creation')
+    })
+    @nameOrder = REMenuItem.alloc.initWithTitle('Name', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
+      orderUsers('name')
+    })
+    @modifiedOrder = REMenuItem.alloc.initWithTitle('Latest Activities', subtitle: nil, image: nil, highlightedImage: nil, action:-> item {
+      orderUsers('modified')
+    })
+    @optionsMenu = REMenu.alloc.initWithItems([@reputationOrder, @creationOrder, @nameOrder, @modifiedOrder])
   end
 
   def registerEvents
@@ -116,6 +139,11 @@ class UsersController < BaseController
     @users = notification.object
     @table.reloadData
     hideProgress
+  end
+
+  def toggleOptionsMenu
+    return @optionsMenu.close if @optionsMenu.isOpen
+    @optionsMenu.showFromNavigationController(navigationController)
   end
 
 end

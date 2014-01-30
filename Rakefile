@@ -50,6 +50,7 @@ Motion::Project::App.setup do |app|
     pod 'DDURLParser'
     pod 'MRProgress'
     pod 'AMScrollingNavbar'
+    pod 'REMenu'
   end
 
 end
