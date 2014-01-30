@@ -23,7 +23,7 @@ class AppHelper
     end
 
     def prepParams(params={})
-      params.merge(site: STACK_OVERFLOW_SITE_PARAM)
+      params.merge(site: STACK_OVERFLOW_SITE_PARAM, pagesize: PAGE_SIZE)
     end
 
   end

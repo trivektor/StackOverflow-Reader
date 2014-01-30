@@ -8,3 +8,4 @@ STACK_EXCHANGE_REDIRECT_URI = 'http://stackmotion.herokuapp.com'
 APP_KEYCHAIN_IDENTIFIER = 'StackOverflowMotionKeychain'
 APP_KEYCHAIN_ACCOUNT = 'stack_overflow_motion'
 OAUTH_URL = "https://stackexchange.com/oauth/dialog?client_id=#{STACK_EXCHANGE_CLIENT_ID}&scope=#{STACK_EXCHANGE_SCOPES.join(',')}&redirect_uri=#{STACK_EXCHANGE_REDIRECT_URI}"
+PAGE_SIZE = 100
