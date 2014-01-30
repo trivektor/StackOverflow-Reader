@@ -5,7 +5,7 @@ class MenuCell < UITableViewCell
   TEXT_COLOR = '#fff'.uicolor
   TEXT_FONT = 'HelveticaNeue-Light'.uifont(16)
   ICON_FONT = FontAwesome.fontWithSize(17)
-  SEPARATOR_COLOR = '#fff'.uicolor(0.4)
+  SEPARATOR_COLOR = '#fff'.uicolor(0.2)
 
   attr_accessor :iconLabel, :textLabel, :image
 
@@ -85,7 +85,7 @@ class MenuController < UIViewController
 
   include UIViewControllerExtension
 
-  BACKGROUND_COLOR = '#222'.uicolor
+  BACKGROUND_COLOR = '#333'.uicolor
 
   private
 

@@ -95,6 +95,12 @@ class UsersController < BaseController
       orderUsers('modified')
     })
     @optionsMenu = REMenu.alloc.initWithItems([@reputationOrder, @creationOrder, @nameOrder, @modifiedOrder])
+    @optionsMenu.font = 'HelveticaNeue-Thin'.uifont(16)
+    @optionsMenu.borderWidth = 0
+    @optionsMenu.backgroundColor = '#333'.uicolor
+    @optionsMenu.textColor = '#fff'.uicolor
+    @optionsMenu.separatorColor = '#fff'.uicolor(0.2)
+    @optionsMenu.separatorHeight = 0.5
   end
 
   def registerEvents
