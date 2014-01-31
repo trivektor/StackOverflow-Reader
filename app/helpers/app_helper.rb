@@ -26,6 +26,10 @@ class AppHelper
       params.merge(site: STACK_OVERFLOW_SITE_PARAM, pagesize: PAGE_SIZE)
     end
 
+    def numberWithComma(number)
+      number < 1000 ? number : number.string_with_style
+    end
+
   end
 
 end

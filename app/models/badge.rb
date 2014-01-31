@@ -30,4 +30,20 @@ class Badge
     @data
   end
 
+  def self.fetchTop(options={})
+    @@client ||= AFMotion::Client.build(STACK_EXCHANGE_API_HOST) do
+      header 'Accept', 'application/json'
+      response_serializer :json
+    end
+
+    @@client.get('badges', AppHelper.prepParams) do |result|
+      if result.success?
+        'TopBadgesFetched'.post_notification(result.object[:items].to_a.map { |q| self.new(q) })
+      else
+        puts result.error.localizedDescription
+      end
+    end
+  end
+
+
 end

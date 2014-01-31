@@ -142,6 +142,8 @@ class MenuController < UIViewController
       navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(TagsController.new))
     when 2
       navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(UsersController.new))
+    when 3
+      navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(BadgesController.new))
     end
   end
 
