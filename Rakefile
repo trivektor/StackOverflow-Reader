@@ -20,6 +20,7 @@ Motion::Project::App.setup do |app|
   app.codesign_certificate = ENV['MOTION_CODESIGN_CERTIFICATE']
   app.detect_dependencies = false
   app.prerendered_icon = true
+  app.interface_orientations = [:portrait]
 
   # Frameworks
   %w(
