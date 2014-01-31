@@ -18,6 +18,7 @@ class BadgesController < BaseController
   end
 
   def performHousekeepingTasks
+    super
     @table = createTable
     view.addSubview(@table)
     initAMScrollingNavbar

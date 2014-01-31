@@ -142,7 +142,7 @@ class TopQuestionsController < QuestionsController
 
   def viewDidLoad
     super
-    navigationItem.title = 'Top Questions'
+    navigationItem.title = 'Popular Questions'
     Question.top
     showProgress
   end
