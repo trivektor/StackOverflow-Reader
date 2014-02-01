@@ -38,7 +38,6 @@ section .lead {
 }
 
 .user-avatar {
-  float: left;
   width: 24px;
 }
 
@@ -83,8 +82,30 @@ section .lead {
   padding-right: 0;
 }
 
+.user-module {
+  vertical-align: middle;
+  margin: 10px 0;
+}
+
+.user-module .user-avatar {
+  margin-right: 5px;
+}
+
+.user-module .reputation {
+  display: inline;
+}
+
 #question-title {
-  font-size: 20px;
+  font-size: 22px;
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.inline-element {
+  display: inline;
+}
+
+.score {
+  display: block;
+  font-size: 1.4em;
 }

@@ -41,7 +41,7 @@ class QuestionController < BaseController
     navigationItem.title = 'Question'
     @webView = createWebView
     view.addSubview(@webView)
-    navigationItem.rightBarButtonItem = createFontAwesomeButton(icon: 'cog', color: UIColor.whiteColor, touchHandler: 'displayOptions')
+    navigationItem.rightBarButtonItem = createFontAwesomeButton(icon: 'share', color: UIColor.whiteColor, touchHandler: 'displayOptions')
   end
 
   def displayOptions

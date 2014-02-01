@@ -172,10 +172,12 @@ class QuestionsSearchController < QuestionsController
   def createSearchBar
     size = view.bounds.size
     @searchBar = UISearchBar.alloc.initWithFrame([[0, 0], [size.width, 44]])
-    @searchBar.tintColor = '#fff'.uicolor
-    @searchBar.backgroundColor = '#fff'.uicolor
+    @searchBar.barTintColor = '#fff'.uicolor
+    @searchBar.translucent = true
+    @searchBar.backgroundColor = '#eee'.uicolor
     @searchBar.delegate = self
     @searchBar.placeholder = 'Search'
+    @searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone
     view.addSubview(@searchBar)
   end
 

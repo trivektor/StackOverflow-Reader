@@ -7,6 +7,7 @@
     <link rel='stylesheet' type='text/css' href='bootflat-square.css'>
     <link rel='stylesheet' type='text/css' href='bootflat.extensions.css'>
     <link rel='stylesheet' type='text/css' href='customizations.css'>
+    <link rel='stylesheet' type='text/css' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'>
     <script src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.0/moment.min.js'></script>
     <script>
@@ -22,29 +23,23 @@
   <body>
     <main>
       <section>
-        <h1 id='question-title'>{{question.title}}</h1>
         <div class='media'>
           <div class='pull-left'>
             <figure class='label label-warning label-square'>{{question.score}}</figure>
           </div>
           <div class='media-body'>
-            <div class='body'>
-              <div class='region-responsive'>{{question.body}}</div>
-            </div>
-            <time class='block-element text-muted'>
-              <small>asked <span class='time' data-timestamp='{{question.creation_date}}'></span></small>
-            </time>
-            <div class='media block-element label label-minimal label-square answerer'>
-              <div class='pull-left'>
-                <img class='user-avatar' src='{{question.owner.profile_image}}' alt='{{question.owner.display_name}}' />
-              </div>
-              <div class='media-body'>
-                <b>{{question.owner.display_name}}</b>
-                <figure>{{question.owner.formatted_reputation}}</figure>
-              </div>
-            </div>
+            <h1 id='question-title'>{{question.title}}</h1>
           </div>
         </div>
+        <div class='user-module'>
+          <img class='user-avatar' src='{{question.owner.profile_image}}' alt='{{question.owner.display_name}}' />
+          <b>{{question.owner.display_name}}</b>
+          <figure class='reputation'>({{question.owner.formatted_reputation}})</figure>
+          <time class='block-element text-muted'>
+            <small><span class='time' data-timestamp='{{question.creation_date}}'></span></small>
+          </time>
+        </div>
+        <div class='region-responsive'>{{question.body}}</div>
       </section>
       <section>
         <h2 class='lead'>Answers: {{question.answer_count}}</h2>
@@ -58,21 +53,22 @@
             <li class='list-group-item'>
               <div class='media'>
                 <div class='pull-left'>
-                  <figure class='label label-warning label-square label-success'>{{score}}</figure>
+                  <figure class='label label-warning label-square'>{{score}}</figure>
+                  {{#is_accepted}}
+                    <span class='score text-success'>
+                      <i class='fa fa-check'></i>
+                    </span>
+                  {{/is_accepted}}
                 </div>
                 <div class='media-body'>
                   <div class='region-responsive'>{{body}}</div>
-                  <time class='block-element'>
-                    <small>answered <span class='time' data-timestamp='{{creation_date}}'></span></small>
-                  </time>
-                  <div class='media block-element label label-minimal label-square answerer'>
-                    <div class='pull-left'>
-                      <img class='user-avatar' src='{{owner.profile_image}}' alt='{{owner.display_name}}' />
-                    </div>
-                    <div class='media-body'>
-                      <b>{{owner.display_name}}</b>
-                      <figure>{{owner.formatted_reputation}}</figure>
-                    </div>
+                  <div class='user-module'>
+                    <img class='user-avatar' src='{{owner.profile_image}}' alt='{{owner.display_name}}' />
+                    <b>{{owner.display_name}}</b>
+                    <figure class='reputation'>({{owner.formatted_reputation}})</figure>
+                    <time class='block-element text-muted'>
+                      <small><span class='time' data-timestamp='{{creation_date}}'></span></small>
+                    </time>
                   </div>
                 </div>
               </div>

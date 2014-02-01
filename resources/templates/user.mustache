@@ -34,36 +34,51 @@
       </header>
       <h3>Questions</h3>
       <ul class='list-group vertically-separated'>
-        {{#questions}}
-          <li class='list-group-item'>
-            <div class='media'>
-              <div class='pull-left'>
-                <span class='label label-warning label-square'>{{score}}</span>
+        {{#questions.length}}
+          {{#questions}}
+            <li class='list-group-item'>
+              <div class='media'>
+                <div class='pull-left'>
+                  <span class='label label-warning label-square'>{{score}}</span>
+                </div>
+                <div class='media-body'>{{title}}</div>
               </div>
-              <div class='media-body'>{{title}}</div>
-            </div>
-          </li>
-        {{/questions}}
+            </li>
+          {{/questions}}
+        {{/questions.length}}
+        {{^questions.length}}
+          User has not asked any question
+        {{/questions.length}}
       </ul>
       <h3>Tags</h3>
       <ul class='list-group vertically-separated'>
-        {{#tags}}
-          <li class='list-group-item'>
-            <span class='label label-success label-square'>{{name}}</span>
-            &times;
-            {{formatted_count}}
-          </li>
-        {{/tags}}
+        {{#tags.length}}
+          {{#tags}}
+            <li class='list-group-item'>
+              <span class='label label-success label-square'>{{name}}</span>
+              &times;
+              {{formatted_count}}
+            </li>
+          {{/tags}}
+        {{/tags.length}}
+        {{^tags.length}}
+          User does not have any tags
+        {{/tags.length}}
       </ul>
       <h3>Badges</h3>
       <ul class='list-group vertically-separated'>
-        {{#badges}}
-          <li class='list-group-item'>
-            <span class='label label-success label-square'>{{name}}</span>
-            &times;
-            {{award_count}}
-          </li>
-        {{/badges}}
+        {{#badges.length}}
+          {{#badges}}
+            <li class='list-group-item'>
+              <span class='label label-success label-square'>{{name}}</span>
+              &times;
+              {{award_count}}
+            </li>
+          {{/badges}}
+        {{/badges.length}}
+        {{^badges.length}}
+          User has not been awarded any badges
+        {{/badges.length}}
       </ul>
     </main>
   </body>
