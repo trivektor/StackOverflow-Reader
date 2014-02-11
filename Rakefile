@@ -52,6 +52,7 @@ Motion::Project::App.setup do |app|
     pod 'MRProgress'
     pod 'AMScrollingNavbar'
     pod 'REMenu'
+    pod 'XMLReader'
   end
 
 end
