@@ -52,12 +52,15 @@ class JobsController < BaseController
     performHousekeepingTasks
     registerEvents
     Job.top
+    showProgress
   end
 
   def performHousekeepingTasks
     super
+    navigationItem.title = 'Jobs'
     @table = createTable(cell: JobCell)
     view.addSubview(@table)
+    initAMScrollingNavbar
   end
 
   def registerEvents
@@ -95,9 +98,15 @@ class JobsController < BaseController
     cell
   end
 
+  def tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    controller = JobController.alloc.initWithJob(tableView(tableView, jobForRowAtIndexPath: indexPath))
+    navigationController.pushViewController(controller, animated: true)
+  end
+
   def displayJobs(notification)
     @jobs = notification.object
     @table.reloadData
+    hideProgress
   end
 
 end
