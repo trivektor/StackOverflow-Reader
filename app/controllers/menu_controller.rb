@@ -62,14 +62,11 @@ class MenuCell < UITableViewCell
       @textLabel.text = 'Tags'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-tags')
     when 2
-      @textLabel.text = 'Users'
-      @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-user')
-    when 3
-      @textLabel.text = 'Badges'
-      @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-flag')
-    when 4
       @textLabel.text = 'Unanswered'
       @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-bolt')
+    when 3
+      @textLabel.text = 'Jobs'
+      @iconLabel.text = NSString.fontAwesomeIconStringForIconIdentifier('icon-suitcase')
     end
 
     if indexPath.row < 4
@@ -112,7 +109,7 @@ class MenuController < UIViewController
   end
 
   def tableView(tableView, numberOfRowsInSection: section)
-    5
+    4
   end
 
   def tableView(tableView, heightForRowAtIndexPath: indexPath)
@@ -143,7 +140,7 @@ class MenuController < UIViewController
     when 2
       navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(UsersController.new))
     when 3
-      navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(BadgesController.new))
+      navigateToSelectedController(UINavigationController.alloc.initWithRootViewController(JobsController.new))
     end
   end
 
