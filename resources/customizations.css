@@ -60,7 +60,7 @@ section .lead {
   text-align: left;
 }
 
-.label-warning {
+.label.label-warning {
   background: #ffcd02;
 }
 
@@ -108,4 +108,12 @@ section .lead {
 .score {
   display: block;
   font-size: 1.4em;
+}
+
+.job-description {
+  margin-top: 10px;
+}
+
+.job-description ul {
+  list-style: none;
 }

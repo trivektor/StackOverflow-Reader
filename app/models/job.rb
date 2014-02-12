@@ -22,10 +22,24 @@ class Job
     @data['pubDate']['text']
   end
 
+  def updated_at
+    @data['a10:updated']['text']
+  end
+
   def categories
     @data['category'].to_a.map do |c|
       c.is_a?(Hash) ? c['text'] : c.last
     end.compact
+  end
+
+  def to_json
+    {
+      'title' => title,
+      'description' => description,
+      'created_at' => created_at,
+      'updated_at' => updated_at,
+      'categories' => categories
+    }
   end
 
   def self.top(options={})
