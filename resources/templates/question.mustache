@@ -3,9 +3,6 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' type='text/css' href='bootstrap.css'>
-    <link rel='stylesheet' type='text/css' href='bootflat.css'>
-    <link rel='stylesheet' type='text/css' href='bootflat-square.css'>
-    <link rel='stylesheet' type='text/css' href='bootflat.extensions.css'>
     <link rel='stylesheet' type='text/css' href='customizations.css'>
     <link rel='stylesheet' type='text/css' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'>
     <script src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
@@ -28,7 +25,7 @@
             <figure class='label label-warning label-square'>{{question.score}}</figure>
           </div>
           <div class='media-body'>
-            <h1 id='question-title'>{{question.title}}</h1>
+            <h1 class='item-title'>{{question.title}}</h1>
           </div>
         </div>
         <div class='user-module'>
@@ -42,7 +39,7 @@
         <div class='region-responsive'>{{question.body}}</div>
       </section>
       <section>
-        <h2 class='lead'>Answers: {{question.answer_count}}</h2>
+        <h2 class='alert alert-warning lead'>Answers: {{question.answer_count}}</h2>
         {{#question.tags}}
           <span class='label label-default label-square label-success'>{{.}}</span>
         {{/question.tags}}

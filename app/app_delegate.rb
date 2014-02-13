@@ -12,11 +12,11 @@ class AppDelegate
     UINavigationBar.appearance.setTitleTextAttributes(
       NSForegroundColorAttributeName => whiteColor,
       UITextAttributeTextColor => whiteColor,
-      UITextAttributeFont => 'HelveticaNeue-Medium'.uifont(20),
+      UITextAttributeFont => NAVIGATION_BAR_FONT,
       UITextAttributeTextShadowColor => UIColor.clearColor
     )
 
-    UINavigationBar.appearance.setBarTintColor('#ffcd02'.uicolor)
+    UINavigationBar.appearance.setBarTintColor(NAVIGATION_BAR_COLOR)
     UINavigationBar.appearance.setTintColor(whiteColor)
 
     UIBarButtonItem.appearance.setTintColor(whiteColor)
@@ -33,7 +33,7 @@ class AppDelegate
     sideMenuController = RESideMenu.alloc.initWithContentViewController(navController, menuViewController: menuController)
     sideMenuController.parallaxEnabled = false
     sideMenuController.panGestureEnabled = false
-    sideMenuController.contentViewScaleValue = 0.9
+    sideMenuController.contentViewScaleValue = 0.8
     sideMenuController.delegate = UIApplication.sharedApplication.delegate
 
     self.window.rootViewController = sideMenuController

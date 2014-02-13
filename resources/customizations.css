@@ -1,5 +1,5 @@
 body {
-  font-weight: 300;
+  font-weight: 400;
   font-size: 15px;
   line-height: 1.4em;
   -webkit-overflow-scrolling: touch;
@@ -11,7 +11,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 400;
+  font-weight: inherit;
 }
 
 main {
@@ -27,10 +27,8 @@ section:last-of-type {
   border-bottom: 0;
 }
 
-section .lead {
-  font-size: 18px;
+.lead {
   font-weight: inherit;
-  margin-top: 0;
 }
 
 .block-element {
@@ -95,10 +93,10 @@ section .lead {
   display: inline;
 }
 
-#question-title {
+.item-title {
+  margin: 0 0 15px;
   font-size: 22px;
-  margin-top: 0;
-  margin-bottom: 15px;
+  font-weight: inherit;
 }
 
 .inline-element {
